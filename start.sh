@@ -1,2 +1,2 @@
 # Production startup script for AgriLink context based
-gunicorn app:app --bind 0.0.0.0:$PORT
+uvicorn main:app --host 0.0.0.0 --port $PORT
