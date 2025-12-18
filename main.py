@@ -189,6 +189,11 @@ async def semantic_search(request: SearchRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+class CropWasteCompatibilityRequest(BaseModel):
+    wasteType: str
+    wasteDescription: str
+    cropCategory: Optional[str] = None
+
 @app.post("/crop-waste-compatibility")
 async def analyze_crop_waste_compatibility(request: CropWasteCompatibilityRequest):
     """Analyze crop-waste compatibility using MPNet and knowledge base"""
