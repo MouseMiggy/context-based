@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Dict
 import os
 import json
 import numpy as np
@@ -188,6 +188,138 @@ async def semantic_search(request: SearchRequest):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/crop-waste-compatibility")
+async def analyze_crop_waste_compatibility(request: CropWasteCompatibilityRequest):
+    """Analyze crop-waste compatibility using MPNet and knowledge base"""
+    try:
+        # Get base knowledge for the waste type
+        waste_type_key = None
+        for key in crop_waste_knowledge:
+            if key.lower() in request.wasteType.lower() or request.wasteType.lower() in key.lower():
+                waste_type_key = key
+                break
+        
+        if not waste_type_key:
+            # If exact match not found, try to find the best match using MPNet
+            waste_types = list(crop_waste_knowledge.keys())
+            waste_embeddings = model.encode(waste_types, convert_to_numpy=True)
+            query_embedding = model.encode(request.wasteType, convert_to_numpy=True)
+            
+            similarities = []
+            for i, waste_type in enumerate(waste_types):
+                similarity = np.dot(query_embedding, waste_embeddings[i]) / (
+                    np.linalg.norm(query_embedding) * np.linalg.norm(waste_embeddings[i])
+                )
+                similarities.append((waste_type, similarity))
+            
+            similarities.sort(key=lambda x: x[1], reverse=True)
+            waste_type_key = similarities[0][0] if similarities[0][1] > 0.5 else "Cattle Manure"
+        
+        base_knowledge = crop_waste_knowledge[waste_type_key]
+        
+        # If specific crop category is requested, rank crops within that category
+        if request.cropCategory:
+            category_crops = {
+                "vegetables": ["Leafy Vegetables", "Vegetables (all types)", "Vegetable Gardens", "Tomatoes", "Peppers", "Eggplant", "Broccoli", "Cabbage", "Cauliflower"],
+                "fruits": ["Fruit Trees", "Orchard Fruits", "Berry Crops", "Grapes", "Strawberries"],
+                "grains": ["Rice", "Corn", "Wheat"],
+                "root_crops": ["Root Crops"],
+                "legumes": ["Beans", "Peas"]
+            }
+            
+            category = request.cropCategory.lower()
+            if category in category_crops:
+                # Filter and rank crops for the specific category
+                category_specific_crops = []
+                for crop_info in base_knowledge["best_crops"]:
+                    for category_crop in category_crops[category]:
+                        if category_crop.lower() in crop_info["crop"].lower():
+                            category_specific_crops.append(crop_info)
+                            break
+                
+                # If we have category-specific crops, use them; otherwise use all
+                if category_specific_crops:
+                    return {
+                        "wasteType": request.wasteType,
+                        "wasteCategory": waste_type_key,
+                        "cropCategory": request.cropCategory,
+                        "topCrops": category_specific_crops[:5],
+                        "analysis": f"Based on agricultural science, {request.wasteType} is particularly beneficial for {request.cropCategory} crops"
+                    }
+        
+        # Return top 5 crops with explanations
+        return {
+            "wasteType": request.wasteType,
+            "wasteCategory": waste_type_key,
+            "topCrops": base_knowledge["best_crops"][:5],
+            "analysis": f"Based on agricultural science, {request.wasteType} provides optimal nutrients for these crops"
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+class CropWasteCompatibilityRequest(BaseModel):
+    wasteType: str
+    wasteDescription: str
+    cropCategory: Optional[str] = None
+
+crop_waste_knowledge = {
+    "Cattle Manure": {
+        "best_crops": [
+            {"crop": "Rice", "reason": "Provides balanced NPK nutrients essential for rice growth, improves soil structure for better water retention in paddies"},
+            {"crop": "Corn", "reason": "High potassium content supports strong stalk development and kernel production"},
+            {"crop": "Wheat", "reason": "Excellent source of organic matter that enhances wheat's root development and grain quality"},
+            {"crop": "Vegetables (leafy)", "reason": "Rich in micronutrients that promote vigorous leaf growth in vegetables like lettuce and spinach"},
+            {"crop": "Sugarcane", "reason": "Provides steady release of nutrients throughout the long growing season, boosting sugar content"}
+        ]
+    },
+    "Poultry Waste": {
+        "best_crops": [
+            {"crop": "Leafy Vegetables", "reason": "Very high nitrogen content promotes rapid leaf growth in lettuce, spinach, and cabbage"},
+            {"crop": "Corn", "reason": "Quick-release nitrogen fuels early vegetative growth, leading to taller plants"},
+            {"crop": "Broccoli", "reason": "High nitrogen supports development of large heads and abundant foliage"},
+            {"crop": "Cabbage", "reason": "Promotes tight head formation and large outer leaves"},
+            {"crop": "Cauliflower", "reason": "Essential for curd development and overall plant vigor"}
+        ]
+    },
+    "Swine Waste": {
+        "best_crops": [
+            {"crop": "Root Crops", "reason": "High phosphorus content promotes excellent root development in carrots, radishes, and sweet potatoes"},
+            {"crop": "Fruit Trees", "reason": "Balanced nutrients support flowering, fruit set, and sweet fruit development"},
+            {"crop": "Tomatoes", "reason": "Phosphorus-rich composition enhances flowering and fruit production"},
+            {"crop": "Peppers", "reason": "Supports abundant flowering and larger fruit development"},
+            {"crop": "Eggplant", "reason": "Essential nutrients for fruit set and plant vigor"}
+        ]
+    },
+    "Goat Manure": {
+        "best_crops": [
+            {"crop": "Vegetables (all types)", "reason": "Mild composition won't burn plants, perfect for direct application in vegetable gardens"},
+            {"crop": "Herbs", "reason": "Gentle nutrient release ideal for sensitive herbs like basil and oregano"},
+            {"crop": "Salad Greens", "reason": "Provides steady nutrients without overwhelming delicate greens"},
+            {"crop": "Beans", "reason": "Moderate nitrogen levels support growth without inhibiting nitrogen-fixing bacteria"},
+            {"crop": "Peas", "reason": "Balanced nutrients support pod development and plant health"}
+        ]
+    },
+    "Sheep Manure": {
+        "best_crops": [
+            {"crop": "Berry Crops", "reason": "High phosphorus and potassium promote flowering and sweet fruit development"},
+            {"crop": "Grapes", "reason": "Potassium-rich composition enhances grape sweetness and vine health"},
+            {"crop": "Flowering Plants", "reason": "Promotes abundant blooms and strong stem development"},
+            {"crop": "Orchard Fruits", "reason": "Supports fruit set and improves fruit quality"},
+            {"crop": "Strawberries", "reason": "Enhances flower production and berry sweetness"}
+        ]
+    },
+    "Rabbit Manure": {
+        "best_crops": [
+            {"crop": "Vegetable Gardens", "reason": "Cold manure can be applied directly without composting, perfect for intensive vegetable production"},
+            {"crop": "Tomatoes", "reason": "High nitrogen supports vigorous growth and fruit production"},
+            {"crop": "Peppers", "reason": "Promotes healthy foliage and abundant fruiting"},
+            {"crop": "Cucumbers", "reason": "Quick nutrient release supports rapid vine growth"},
+            {"crop": "Squash", "reason": "Essential nutrients for large fruit development"}
+        ]
+    }
+}
 
 if __name__ == "__main__":
     import uvicorn
