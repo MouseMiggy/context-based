@@ -1,0 +1,1850 @@
+﻿INDIVIDUAL_CROP_NPK = {
+    'white-rice': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Standard staple rice with balanced nutrient needs'
+    },
+    'brown-rice': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Higher nutrient requirements for bran development'
+    },
+    'red-rice': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Anthocyanin-rich variety needs moderate nutrients'
+    },
+    'black-rice': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Antioxidant-rich variety with moderate needs'
+    },
+    'purple-rice': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Similar to black rice, moderate requirements'
+    },
+    'glutinous-rice': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Sticky rice variety needs balanced NPK'
+    },
+    'aromatic-rice': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Fragrant varieties need moderate nutrients'
+    },
+    'lowland-rice': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for rice crops'
+    },
+    'upland-rice': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for rice crops'
+    },
+    'heirloom-rice': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for rice crops'
+    },
+    'organic-rice': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Grown without synthetic fertilizers'
+    },
+    'yellow-corn': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Standard field corn with balanced needs'
+    },
+    'white-corn': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Sweet white corn needs balanced nutrients'
+    },
+    'sweet-corn': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Higher sugar content needs moderate N'
+    },
+    'glutinous-corn': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for corn crops'
+    },
+    'popcorn': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Hard kernel variety needs moderate nutrients'
+    },
+    'feed-corn': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'High yield variety needs more nutrients'
+    },
+    'hybrid-corn': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Hybrid varieties need balanced NPK'
+    },
+    'native-corn': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for corn crops'
+    },
+    'baby-corn': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Young harvest needs moderate nutrients'
+    },
+    'bok-choy': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Fast-growing needs high nitrogen'
+    },
+    'mustard-greens': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'lettuce': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'High nitrogen for tender leaves'
+    },
+    'spinach': {
+        'n': 'moderate',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Very high nitrogen for rapid leaf growth'
+    },
+    'water-spinach': {
+        'n': 'moderate',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Aquatic vegetable needs high nitrogen'
+    },
+    'moringa-leaves': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Superfood needs moderate nitrogen'
+    },
+    'malabar-spinach': {
+        'n': 'low',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'jute-leaves': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'cabbage': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Head formation needs high phosphorus'
+    },
+    'chinese-cabbage': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'napa-cabbage': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'kale': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Nutrient-dense green needs high nitrogen'
+    },
+    'swiss-chard': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'arugula': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'sorrel': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'endive': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'tomato': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'High phosphorus and potassium for fruits'
+    },
+    'eggplant': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Needs balanced NPK for fruit development'
+    },
+    'okra': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'bitter-gourd': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Tropical vine needs moderate nutrients'
+    },
+    'squash': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Heavy feeder needs high nutrients'
+    },
+    'cucumber': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'High water and nutrient needs'
+    },
+    'bell-pepper': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Needs high potassium for fruit quality'
+    },
+    'chili-pepper': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Hot peppers need high potassium'
+    },
+    'chayote': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'bottle-gourd': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'sponge-gourd': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'ridge-gourd': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'winged-bean': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'hyacinth-bean': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'yardlong-bean': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'snow-peas': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'green-peas': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Low N, moderate P and K'
+    },
+    'zucchini': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'carrot': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Root development needs high phosphorus'
+    },
+    'radish': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Fast-growing needs moderate nutrients'
+    },
+    'beetroot': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Root and leaf both edible'
+    },
+    'turnip': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Cold crop needs balanced nutrients'
+    },
+    'parsnip': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'potato': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'sweet-potato': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'cassava': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'taro': {
+        'n': 'very_low',
+        'p': 'moderate',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'purple-yam': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'arrowroot': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'yam-bean': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'onion': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'garlic': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'leek': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'shallot': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'asparagus': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'bamboo-shoots': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'celery': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'kohlrabi': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'cauliflower': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'broccoli': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'banana-blossom': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'squash-flower': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'artichoke': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'seaweed': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'sea-grapes': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'agar-seaweed': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'eucheuma': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'pako': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'katuray-flower': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'talinum': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for vegetables crops'
+    },
+    'banana': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Very high potassium for bunch development'
+    },
+    'mango': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'High potassium for fruit sweetness'
+    },
+    'pineapple': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'papaya': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Continuous fruiting needs high P and K'
+    },
+    'coconut': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Very high potassium for oil production'
+    },
+    'jackfruit': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'High nitrogen for large fruits'
+    },
+    'durian': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'High NPK for premium quality'
+    },
+    'rambutan': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'lanzones': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'mangosteen': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'guava': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'avocado': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'High potassium for oil-rich fruit'
+    },
+    'calamansi': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'High phosphorus for flowering'
+    },
+    'pomelo': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'orange': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'lemon': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'lime': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'watermelon': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'High water and potassium needs'
+    },
+    'melon': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'dragon-fruit': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'star-apple': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'sugar-apple': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'soursop': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'santol': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'tamarind': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'passion-fruit': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'chico': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'duhat': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'balimbing': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'bignay': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'macopa': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'longan': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'lychee': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'kiat-kiat': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'breadfruit': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'marang': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'pili-nut-fruit': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'bael-fruit': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'kamias': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'tamarillo': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'mulberry': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'strawberry': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'persimmon': {
+        'n': 'moderate',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'fig': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'pear': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'apple': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'plum': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'peach': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'cherry': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'blueberry': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'grapes': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for fruits crops'
+    },
+    'sweet-potato-root': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'High energy needs moderate NPK'
+    },
+    'cassava-root': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Starchy root needs low nitrogen'
+    },
+    'taro-root': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Tropical root needs high organic matter'
+    },
+    'purple-yam-root': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'High value crop needs balanced NPK'
+    },
+    'potato-root': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'arrowroot-root': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'yam-bean-root': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'radish-root': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'carrot-root': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'beetroot-root': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'turnip-root': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'parsnip-root': {
+        'n': 'moderate',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'ginger-root': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'turmeric-root': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'galangal-root': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'lotus-root': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'greater-yam': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'lesser-yam': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'elephant-foot-yam': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'purple-sweet-potato': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'tapioca-root': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'jerusalem-artichoke': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'kudzu-root': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for rootCrops crops'
+    },
+    'mung-bean': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Low nitrogen, fixes own N'
+    },
+    'soybean': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Low N needs, high P for protein'
+    },
+    'peanut': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'High phosphorus for nut development'
+    },
+    'cowpea': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Drought-tolerant needs balanced NPK'
+    },
+    'string-bean': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Moderate N needs for vine growth'
+    },
+    'lima-bean': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'chickpea': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'pigeon-pea': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'lentil': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'black-bean': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'red-kidney-bean': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'white-bean': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'split-peas': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'fava-bean': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'adzuki-bean': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'navy-bean': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'pinto-bean': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'jack-bean': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'sword-bean': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'velvet-bean': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'rice-bean': {
+        'n': 'low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'bambara-groundnut': {
+        'n': 'very_low',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'horse-gram': {
+        'n': 'very_low',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Optimized for legumes crops'
+    },
+    'garlic-spice': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Bulb development needs high phosphorus'
+    },
+    'onion-spice': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'High phosphorus for bulb formation'
+    },
+    'shallot-spice': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'ginger-spice': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Rhizome needs moderate nutrients'
+    },
+    'turmeric-spice': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'High curcumin needs moderate NPK'
+    },
+    'galangal-spice': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'black-pepper': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Vine needs balanced nutrients'
+    },
+    'white-pepper': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'chili-spice': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Hot spice needs high potassium'
+    },
+    'birds-eye-chili': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'paprika': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'cinnamon': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'cloves': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'star-anise': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'nutmeg': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'mace': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'coriander-seed': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'cumin': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'fennel': {
+        'n': 'very_low',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'fenugreek': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'mustard-seed': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'allspice': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'bay-leaf': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'vanilla': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'tamarind-spice': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'annatto': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'lemongrass-spice': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'pandan-spice': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'kaffir-lime-leaf': {
+        'n': 'moderate',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'curry-leaf': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'sesame-seed': {
+        'n': 'moderate',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'poppy-seed': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'cardamom': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'anise-seed': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'saffron': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'horseradish': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'basil-herb': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Aromatic herb needs moderate N'
+    },
+    'oregano-herb': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Mediterranean herb needs low N'
+    },
+    'thyme-herb': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'rosemary-herb': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'mint-herb': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Invasive herb needs moderate N'
+    },
+    'lemongrass-herb': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'sambong': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'lagundi': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'tsaang-gubat': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'akapulko': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'pandan-herb': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'ginger-herb': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'turmeric-herb': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'garlic-herb': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'onion-herb': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'holy-basil': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'peppermint': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'stevia': {
+        'n': 'moderate',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'catnip': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'feverfew': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'gotu-kola': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'alagaw': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'banaba': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'bitter-melon-leaves': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for herbs spices crops'
+    },
+    'tobacco': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'High nitrogen for leaf quality'
+    },
+    'rubber': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Moderate NPK for latex production'
+    },
+    'abaca': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Fiber crop needs moderate nutrients'
+    },
+    'cotton': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'High potassium for boll development'
+    },
+    'coffee': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'High quality beans need balanced NPK'
+    },
+    'cacao': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'High potassium for pod development'
+    },
+    'tea': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for industrial crops'
+    },
+    'hemp': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for industrial crops'
+    },
+    'oil-palm': {
+        'n': 'very_high',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'High potassium for oil production'
+    },
+    'sugarcane': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'High yield needs high nitrogen'
+    },
+    'oyster-mushroom': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'very_high',
+        'note': 'High organic matter needs'
+    },
+    'button-mushroom': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'very_high',
+        'note': 'Compost-based needs high OM'
+    },
+    'shiitake': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'very_high',
+        'note': 'Wood-grown needs specific nutrients'
+    },
+    'straw-mushroom': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'very_high',
+        'note': 'Agricultural waste substrate'
+    },
+    'enoki': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'very_high',
+        'note': 'Cold variety needs high organic matter'
+    },
+    'wood-ear': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'very_high',
+        'note': 'Optimized for mushrooms crops'
+    },
+    'king-oyster': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'very_high',
+        'note': 'Optimized for mushrooms crops'
+    },
+    'lions-mane': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'very_high',
+        'note': 'Optimized for mushrooms crops'
+    },
+    'reishi': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'very_high',
+        'note': 'Optimized for mushrooms crops'
+    },
+    'maitake': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'very_high',
+        'note': 'Optimized for mushrooms crops'
+    },
+    'porcini': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'very_high',
+        'note': 'Optimized for mushrooms crops'
+    },
+}

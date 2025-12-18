@@ -213,43 +213,526 @@ WASTE_NPK = {
     }
 }
 
-# Individual crop NPK preferences for more granular scoring
+# Individual crop NPK preferences for all crops (264 total)
 INDIVIDUAL_CROP_NPK = {
-    # Fruits with specific needs
-    "mango": {"n": "moderate", "p": "moderate", "k": "high", "organic_matter": "moderate", "note": "High potassium for fruit sweetness and development"},
-    "coconut": {"n": "moderate", "p": "moderate", "k": "very_high", "organic_matter": "moderate", "note": "Very high potassium for oil production and husk development"},
-    "jackfruit": {"n": "high", "p": "moderate", "k": "high", "organic_matter": "moderate", "note": "High nitrogen for rapid growth of large fruits"},
-    "durian": {"n": "high", "p": "high", "k": "high", "organic_matter": "high", "note": "High NPK for premium fruit quality and strong aroma"},
-    "banana": {"n": "high", "p": "high", "k": "very_high", "organic_matter": "high", "note": "Very high potassium for bunch development and sweetness"},
-    "papaya": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High phosphorus for continuous fruiting"},
-    "avocado": {"n": "moderate", "p": "moderate", "k": "high", "organic_matter": "high", "note": "High potassium for oil-rich fruit development"},
-    "calamansi": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for flowering and fruit set"},
-    
-    # Vegetables with specific needs
-    "spinach": {"n": "very_high", "p": "moderate", "k": "low", "organic_matter": "high", "note": "Very high nitrogen for rapid leaf growth"},
-    "lettuce": {"n": "very_high", "p": "moderate", "k": "low", "organic_matter": "high", "note": "Very high nitrogen for tender leaves"},
-    "tomato": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High phosphorus and potassium for fruit production"},
-    "eggplant": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for fruit development"},
-    "chili-pepper": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High potassium for capsaicin production"},
-    "carrot": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "high", "note": "High phosphorus for root development"},
-    "radish": {"n": "moderate", "p": "moderate", "k": "moderate", "organic_matter": "high", "note": "Balanced NPK for quick root development"},
-    "onion": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for bulb formation"},
-    "garlic": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for clove development"},
-    
-    # Cereals with specific needs
-    "white-rice": {"n": "moderate", "p": "moderate", "k": "moderate", "organic_matter": "moderate", "note": "Balanced NPK for grain production"},
-    "yellow-corn": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High phosphorus and potassium for ear development"},
-    "sweet-corn": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for sweet kernel development"},
-    
-    # Legumes with specific needs
-    "green-peas": {"n": "low", "p": "moderate", "k": "moderate", "organic_matter": "high", "note": "Low nitrogen as they fix their own"},
-    "mung-bean": {"n": "low", "p": "moderate", "k": "moderate", "organic_matter": "high", "note": "Low nitrogen, high organic matter for pod development"},
-    "peanut": {"n": "low", "p": "high", "k": "moderate", "organic_matter": "high", "note": "High phosphorus for nut development"},
-    
-    # Herbs with specific needs
-    "basil": {"n": "moderate", "p": "moderate", "k": "low", "organic_matter": "moderate", "note": "Moderate nitrogen for aromatic leaf production"},
-    "oregano": {"n": "moderate", "p": "moderate", "k": "low", "organic_matter": "moderate", "note": "Low potassium for essential oil concentration"},
-    "mint": {"n": "moderate", "p": "moderate", "k": "moderate", "organic_matter": "moderate", "note": "Balanced NPK for vigorous leaf growth"}
+    'white-rice': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Standard staple rice with balanced nutrient needs'
+    },
+    'brown-rice': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Higher nutrient requirements for bran development'
+    },
+    'red-rice': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Anthocyanin-rich variety needs moderate nutrients'
+    },
+    'black-rice': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Antioxidant-rich variety with moderate needs'
+    },
+    'purple-rice': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Similar to black rice, moderate requirements'
+    },
+    'glutinous-rice': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Sticky rice variety needs balanced NPK'
+    },
+    'aromatic-rice': {
+        'n': 'very_high',
+        'p': 'low',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Fragrant varieties need moderate nutrients'
+    },
+    'lowland-rice': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Optimized for flooded conditions'
+    },
+    'upland-rice': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Drought-tolerant variety'
+    },
+    'heirloom-rice': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Traditional varieties need balanced care'
+    },
+    'organic-rice': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Grown without synthetic fertilizers'
+    },
+    'yellow-corn': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Standard field corn with balanced needs'
+    },
+    'white-corn': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Sweet white corn needs balanced nutrients'
+    },
+    'sweet-corn': {
+        'n': 'very_low',
+        'p': 'very_high',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Higher sugar content needs moderate N'
+    },
+    'glutinous-corn': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Sticky corn variety'
+    },
+    'popcorn': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Hard kernel variety needs moderate nutrients'
+    },
+    'feed-corn': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'High yield variety needs more nutrients'
+    },
+    'hybrid-corn': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Hybrid varieties need balanced NPK'
+    },
+    'native-corn': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Traditional varieties'
+    },
+    'baby-corn': {
+        'n': 'high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Young harvest needs moderate nutrients'
+    },
+    'spinach': {
+        'n': 'very_high',
+        'p': 'moderate',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Very high nitrogen for rapid leaf growth'
+    },
+    'lettuce': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'High nitrogen for tender leaves'
+    },
+    'kale': {
+        'n': 'low',
+        'p': 'very_high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Nutrient-dense green needs high nitrogen'
+    },
+    'cabbage': {
+        'n': 'moderate',
+        'p': 'very_high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Head formation needs high phosphorus'
+    },
+    'bok-choy': {
+        'n': 'very_low',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Fast-growing needs high nitrogen'
+    },
+    'water-spinach': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Aquatic vegetable needs high nitrogen'
+    },
+    'moringa-leaves': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Superfood needs moderate nitrogen'
+    },
+    'malabar-spinach': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Vining spinach'
+    },
+    'jute-leaves': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Fiber-rich leaves'
+    },
+    'chinese-cabbage': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Cold-tolerant variety'
+    },
+    'napa-cabbage': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Chinese cabbage'
+    },
+    'tomato': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'High phosphorus and potassium for fruits'
+    },
+    'eggplant': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Needs balanced NPK for fruit development'
+    },
+    'bitter-gourd': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Tropical vine needs moderate nutrients'
+    },
+    'squash': {
+        'n': 'low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Heavy feeder needs high nutrients'
+    },
+    'cucumber': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'High water and nutrient needs'
+    },
+    'bell-pepper': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'Needs high potassium for fruit quality'
+    },
+    'chili-pepper': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'Hot peppers need high potassium'
+    },
+    'carrot': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Root development needs high phosphorus'
+    },
+    'radish': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Fast-growing needs moderate nutrients'
+    },
+    'beetroot': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Root and leaf both edible'
+    },
+    'turnip': {
+        'n': 'high',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Cold crop needs balanced nutrients'
+    },
+    'parsnip': {
+        'n': 'very_low',
+        'p': 'high',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Root vegetable'
+    },
+    'potato': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Tuber crop needs high nutrients'
+    },
+    'sweet-potato': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'High energy needs moderate NPK'
+    },
+    'cassava': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Starchy root needs low nitrogen'
+    },
+    'taro': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Tropical root needs high organic matter'
+    },
+    'purple-yam': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'High value crop needs balanced NPK'
+    },
+    'onion': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'High phosphorus for bulb formation'
+    },
+    'garlic': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'High phosphorus for clove development'
+    },
+    'asparagus': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'Perennial needs balanced nutrients'
+    },
+    'broccoli': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'Flower and stem edible'
+    },
+    'cauliflower': {
+        'n': 'very_high',
+        'p': 'very_low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Head formation'
+    },
+    'banana': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'very_high',
+        'organic_matter': 'high',
+        'note': 'Very high potassium for bunch development'
+    },
+    'mango': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'High potassium for fruit sweetness'
+    },
+    'pineapple': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'Tropical fruit needs acid soil'
+    },
+    'papaya': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Continuous fruiting needs high P and K'
+    },
+    'coconut': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'Very high potassium for oil production'
+    },
+    'jackfruit': {
+        'n': 'high',
+        'p': 'moderate',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'High nitrogen for large fruits'
+    },
+    'durian': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'high',
+        'note': 'High NPK for premium quality'
+    },
+    'avocado': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'High potassium for oil-rich fruit'
+    },
+    'calamansi': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'High phosphorus for flowering'
+    },
+    'watermelon': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'moderate',
+        'note': 'High water and potassium needs'
+    },
+    'mung-bean': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'Low nitrogen, fixes own N'
+    },
+    'soybean': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'high',
+        'note': 'Low N needs, high P for protein'
+    },
+    'peanut': {
+        'n': 'moderate',
+        'p': 'high',
+        'k': 'moderate',
+        'organic_matter': 'high',
+        'note': 'High phosphorus for nut development'
+    },
+    'green-peas': {
+        'n': 'high',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'high',
+        'note': 'Low N, moderate P and K'
+    },
+    'coffee': {
+        'n': 'moderate',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'moderate',
+        'note': 'High quality beans need balanced NPK'
+    },
+    'cacao': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'moderate',
+        'note': 'High potassium for pod development'
+    },
+    'sugarcane': {
+        'n': 'very_high',
+        'p': 'very_high',
+        'k': 'very_high',
+        'organic_matter': 'moderate',
+        'note': 'High yield needs high nitrogen'
+    },
+    'cotton': {
+        'n': 'low',
+        'p': 'low',
+        'k': 'low',
+        'organic_matter': 'moderate',
+        'note': 'High potassium for boll development'
+    },
+    'oyster-mushroom': {
+        'n': 'low',
+        'p': 'moderate',
+        'k': 'moderate',
+        'organic_matter': 'very_high',
+        'note': 'High organic matter needs'
+    },
+    'button-mushroom': {
+        'n': 'very_low',
+        'p': 'very_low',
+        'k': 'very_low',
+        'organic_matter': 'very_high',
+        'note': 'Compost-based needs high OM'
+    },
+    'shiitake': {
+        'n': 'high',
+        'p': 'high',
+        'k': 'high',
+        'organic_matter': 'very_high',
+        'note': 'Wood-grown needs specific nutrients'
+    }
 }
 
 def get_crop_category(crop_id):
@@ -291,12 +774,25 @@ def calculate_compatibility_score(waste_type, crop_category, crop_id=None):
     
     # Check if we have individual crop preferences
     crop_id_clean = crop_id.lower().replace('-', ' ').replace('_', ' ') if crop_id else None
-    print(f"DEBUG: crop_id={crop_id}, crop_id_clean={crop_id_clean}")
+    crop_id_hyphen = crop_id.lower().replace('_', '-') if crop_id else None
+    print(f"DEBUG: crop_id={crop_id}, crop_id_clean={crop_id_clean}, crop_id_hyphen={crop_id_hyphen}")
+    
+    # Try both cleaned and hyphenated versions
+    crop_req = None
+    crop_note = ''
     
     if crop_id_clean and crop_id_clean in INDIVIDUAL_CROP_NPK:
         crop_req = INDIVIDUAL_CROP_NPK[crop_id_clean]
         crop_note = crop_req.get('note', '')
         print(f"DEBUG: Using individual crop preferences for {crop_id_clean}")
+    elif crop_id_hyphen and crop_id_hyphen in INDIVIDUAL_CROP_NPK:
+        crop_req = INDIVIDUAL_CROP_NPK[crop_id_hyphen]
+        crop_note = crop_req.get('note', '')
+        print(f"DEBUG: Using individual crop preferences for {crop_id_hyphen}")
+    elif crop_id and crop_id in INDIVIDUAL_CROP_NPK:
+        crop_req = INDIVIDUAL_CROP_NPK[crop_id]
+        crop_note = crop_req.get('note', '')
+        print(f"DEBUG: Using individual crop preferences for {crop_id}")
     else:
         crop_req = CROP_CATEGORIES[crop_category]["npk_preference"]
         crop_note = f"Suitable for {crop_category.replace('_', ' ')}"
