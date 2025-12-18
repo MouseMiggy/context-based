@@ -291,12 +291,16 @@ def calculate_compatibility_score(waste_type, crop_category, crop_id=None):
     
     # Check if we have individual crop preferences
     crop_id_clean = crop_id.lower().replace('-', ' ').replace('_', ' ') if crop_id else None
+    print(f"DEBUG: crop_id={crop_id}, crop_id_clean={crop_id_clean}")
+    
     if crop_id_clean and crop_id_clean in INDIVIDUAL_CROP_NPK:
         crop_req = INDIVIDUAL_CROP_NPK[crop_id_clean]
         crop_note = crop_req.get('note', '')
+        print(f"DEBUG: Using individual crop preferences for {crop_id_clean}")
     else:
         crop_req = CROP_CATEGORIES[crop_category]["npk_preference"]
         crop_note = f"Suitable for {crop_category.replace('_', ' ')}"
+        print(f"DEBUG: Using category preferences for {crop_category}")
     
     score = 0
     max_score = 100
