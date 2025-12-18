@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 import os
 import json
 import numpy as np
@@ -90,6 +90,12 @@ class ListingEmbedRequest(BaseModel):
 class SearchRequest(BaseModel):
     text: str
     top_k: int = 10
+
+class BatchCropWasteRequest(BaseModel):
+    wasteType: str
+    wasteDescription: str
+    cropCategory: Optional[str] = None
+    listings: List[Dict[str, Any]]
 
 class EmbedResponse(BaseModel):
     embedding: List[float]
