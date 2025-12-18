@@ -213,6 +213,45 @@ WASTE_NPK = {
     }
 }
 
+# Individual crop NPK preferences for more granular scoring
+INDIVIDUAL_CROP_NPK = {
+    # Fruits with specific needs
+    "mango": {"n": "moderate", "p": "moderate", "k": "high", "organic_matter": "moderate", "note": "High potassium for fruit sweetness and development"},
+    "coconut": {"n": "moderate", "p": "moderate", "k": "very_high", "organic_matter": "moderate", "note": "Very high potassium for oil production and husk development"},
+    "jackfruit": {"n": "high", "p": "moderate", "k": "high", "organic_matter": "moderate", "note": "High nitrogen for rapid growth of large fruits"},
+    "durian": {"n": "high", "p": "high", "k": "high", "organic_matter": "high", "note": "High NPK for premium fruit quality and strong aroma"},
+    "banana": {"n": "high", "p": "high", "k": "very_high", "organic_matter": "high", "note": "Very high potassium for bunch development and sweetness"},
+    "papaya": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High phosphorus for continuous fruiting"},
+    "avocado": {"n": "moderate", "p": "moderate", "k": "high", "organic_matter": "high", "note": "High potassium for oil-rich fruit development"},
+    "calamansi": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for flowering and fruit set"},
+    
+    # Vegetables with specific needs
+    "spinach": {"n": "very_high", "p": "moderate", "k": "low", "organic_matter": "high", "note": "Very high nitrogen for rapid leaf growth"},
+    "lettuce": {"n": "very_high", "p": "moderate", "k": "low", "organic_matter": "high", "note": "Very high nitrogen for tender leaves"},
+    "tomato": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High phosphorus and potassium for fruit production"},
+    "eggplant": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for fruit development"},
+    "chili-pepper": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High potassium for capsaicin production"},
+    "carrot": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "high", "note": "High phosphorus for root development"},
+    "radish": {"n": "moderate", "p": "moderate", "k": "moderate", "organic_matter": "high", "note": "Balanced NPK for quick root development"},
+    "onion": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for bulb formation"},
+    "garlic": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for clove development"},
+    
+    # Cereals with specific needs
+    "white-rice": {"n": "moderate", "p": "moderate", "k": "moderate", "organic_matter": "moderate", "note": "Balanced NPK for grain production"},
+    "yellow-corn": {"n": "moderate", "p": "high", "k": "high", "organic_matter": "moderate", "note": "High phosphorus and potassium for ear development"},
+    "sweet-corn": {"n": "moderate", "p": "high", "k": "moderate", "organic_matter": "moderate", "note": "High phosphorus for sweet kernel development"},
+    
+    # Legumes with specific needs
+    "green-peas": {"n": "low", "p": "moderate", "k": "moderate", "organic_matter": "high", "note": "Low nitrogen as they fix their own"},
+    "mung-bean": {"n": "low", "p": "moderate", "k": "moderate", "organic_matter": "high", "note": "Low nitrogen, high organic matter for pod development"},
+    "peanut": {"n": "low", "p": "high", "k": "moderate", "organic_matter": "high", "note": "High phosphorus for nut development"},
+    
+    # Herbs with specific needs
+    "basil": {"n": "moderate", "p": "moderate", "k": "low", "organic_matter": "moderate", "note": "Moderate nitrogen for aromatic leaf production"},
+    "oregano": {"n": "moderate", "p": "moderate", "k": "low", "organic_matter": "moderate", "note": "Low potassium for essential oil concentration"},
+    "mint": {"n": "moderate", "p": "moderate", "k": "moderate", "organic_matter": "moderate", "note": "Balanced NPK for vigorous leaf growth"}
+}
+
 def get_crop_category(crop_id):
     """Map crop ID to its agricultural category"""
     crop_id = crop_id.lower().replace('-', ' ').replace('_', ' ')
@@ -243,13 +282,21 @@ def get_crop_category(crop_id):
     
     return "general"  # Default category
 
-def calculate_compatibility_score(waste_type, crop_category):
+def calculate_compatibility_score(waste_type, crop_category, crop_id=None):
     """Calculate compatibility score based on NPK matching and crop requirements"""
     if crop_category not in CROP_CATEGORIES or waste_type not in WASTE_NPK:
         return 0
     
     waste = WASTE_NPK[waste_type]
-    crop_req = CROP_CATEGORIES[crop_category]["npk_preference"]
+    
+    # Check if we have individual crop preferences
+    crop_id_clean = crop_id.lower().replace('-', ' ').replace('_', ' ') if crop_id else None
+    if crop_id_clean and crop_id_clean in INDIVIDUAL_CROP_NPK:
+        crop_req = INDIVIDUAL_CROP_NPK[crop_id_clean]
+        crop_note = crop_req.get('note', '')
+    else:
+        crop_req = CROP_CATEGORIES[crop_category]["npk_preference"]
+        crop_note = f"Suitable for {crop_category.replace('_', ' ')}"
     
     score = 0
     max_score = 100
@@ -257,8 +304,17 @@ def calculate_compatibility_score(waste_type, crop_category):
     # NPK matching score (70% of total)
     npk_score = 0
     
-    # Nitrogen preference
-    if crop_req["n"] == "high" and waste["n"] >= 2.5:
+    # Nitrogen preference - handle very_high
+    n_target = {
+        "very_high": 3.0,
+        "high": 2.5,
+        "moderate": 1.5,
+        "low": 1.0
+    }.get(crop_req["n"], 1.5)
+    
+    if crop_req["n"] == "very_high" and waste["n"] >= 3.0:
+        npk_score += 30
+    elif crop_req["n"] == "high" and waste["n"] >= 2.5:
         npk_score += 30
     elif crop_req["n"] == "moderate" and 1.5 <= waste["n"] <= 2.5:
         npk_score += 30
@@ -266,49 +322,79 @@ def calculate_compatibility_score(waste_type, crop_category):
         npk_score += 30
     else:
         # Partial match
-        diff = abs(waste["n"] - (2.5 if crop_req["n"] == "high" else 1.5 if crop_req["n"] == "moderate" else 1.0))
+        diff = abs(waste["n"] - n_target)
         npk_score += max(0, 30 - diff * 10)
     
     # Phosphorus preference
-    if crop_req["p"] == "high" and waste["p"] >= 2.0:
+    p_target = {
+        "very_high": 2.5,
+        "high": 2.0,
+        "moderate": 1.5,
+        "low": 1.0
+    }.get(crop_req["p"], 1.5)
+    
+    if crop_req["p"] == "very_high" and waste["p"] >= 2.5:
+        npk_score += 20
+    elif crop_req["p"] == "high" and waste["p"] >= 2.0:
         npk_score += 20
     elif crop_req["p"] == "moderate" and 1.0 <= waste["p"] <= 2.0:
         npk_score += 20
     elif crop_req["p"] == "low" and waste["p"] <= 1.5:
         npk_score += 20
     else:
-        diff = abs(waste["p"] - (2.0 if crop_req["p"] == "high" else 1.5 if crop_req["p"] == "moderate" else 1.0))
+        diff = abs(waste["p"] - p_target)
         npk_score += max(0, 20 - diff * 10)
     
-    # Potassium preference
-    if crop_req["k"] == "high" and waste["k"] >= 2.0:
+    # Potassium preference - handle very_high
+    k_target = {
+        "very_high": 2.5,
+        "high": 2.0,
+        "moderate": 1.5,
+        "low": 1.0
+    }.get(crop_req["k"], 1.5)
+    
+    if crop_req["k"] == "very_high" and waste["k"] >= 2.5:
+        npk_score += 20
+    elif crop_req["k"] == "high" and waste["k"] >= 2.0:
         npk_score += 20
     elif crop_req["k"] == "moderate" and 1.0 <= waste["k"] <= 2.0:
         npk_score += 20
     elif crop_req["k"] == "low" and waste["k"] <= 1.5:
         npk_score += 20
     else:
-        diff = abs(waste["k"] - (2.0 if crop_req["k"] == "high" else 1.5 if crop_req["k"] == "moderate" else 1.0))
+        diff = abs(waste["k"] - k_target)
         npk_score += max(0, 20 - diff * 10)
     
     score += npk_score * 0.7
     
     # Organic matter preference (20% of total)
-    if CROP_CATEGORIES[crop_category]["organic_matter"] == "high" and waste["organic_matter"] >= 80:
+    om_target = {
+        "very_high": 90,
+        "high": 85,
+        "moderate": 75,
+        "low": 70
+    }.get(crop_req.get("organic_matter", "moderate"), 75)
+    
+    if crop_req.get("organic_matter") == "very_high" and waste["organic_matter"] >= 90:
         score += 20
-    elif CROP_CATEGORIES[crop_category]["organic_matter"] == "moderate" and 70 <= waste["organic_matter"] <= 85:
+    elif crop_req.get("organic_matter") == "high" and waste["organic_matter"] >= 80:
         score += 20
-    elif CROP_CATEGORIES[crop_category]["organic_matter"] == "low" and waste["organic_matter"] <= 75:
+    elif crop_req.get("organic_matter") == "moderate" and 70 <= waste["organic_matter"] <= 85:
+        score += 20
+    elif crop_req.get("organic_matter") == "low" and waste["organic_matter"] <= 75:
         score += 20
     else:
-        # Partial match
-        target = 85 if CROP_CATEGORIES[crop_category]["organic_matter"] == "high" else 75
-        diff = abs(waste["organic_matter"] - target)
+        diff = abs(waste["organic_matter"] - om_target)
         score += max(0, 20 - diff * 0.5)
     
     # Best for bonus (10% of total)
     if crop_category in waste["best_for"]:
         score += 10
+    
+    # Store the crop note for use in the response
+    if not hasattr(calculate_compatibility_score, '_crop_notes'):
+        calculate_compatibility_score._crop_notes = {}
+    calculate_compatibility_score._crop_notes[crop_id_clean] = crop_note
     
     return min(max_score, score)
 
@@ -634,7 +720,7 @@ async def analyze_crop_compatibility(request: CropCompatibilityRequest):
                 crop_category = get_crop_category(crop_id)
                 
                 # Calculate compatibility score using agricultural rules
-                compatibility_score = calculate_compatibility_score(waste_type, crop_category)
+                compatibility_score = calculate_compatibility_score(waste_type, crop_category, crop_id)
                 
                 # Get crop display name
                 crop_name = crop_id.replace('-', ' ').replace('_', ' ').title()
@@ -656,11 +742,14 @@ async def analyze_crop_compatibility(request: CropCompatibilityRequest):
                 top_crops = []
                 for crop in crop_scores[:5]:
                     waste_info = WASTE_NPK[waste_type]
+                    crop_id_clean = crop['cropId'].lower().replace('-', ' ').replace('_', ' ')
+                    crop_note = INDIVIDUAL_CROP_NPK.get(crop_id_clean, {}).get('note', f"Suitable for {crop['category'].replace('_', ' ')}")
+                    
                     top_crops.append({
                         'cropId': crop['cropId'],
                         'cropName': crop['cropName'],
                         'score': crop['score'],
-                        'reason': f"{waste_type.title()} manure - N:{waste_info['n']}%, P:{waste_info['p']}%, K:{waste_info['k']}%, {waste_info['organic_matter']}% organic matter. {waste_info['notes']} Usage: {waste_info['usage']}",
+                        'reason': f"{waste_type.title()} manure - N:{waste_info['n']}%, P:{waste_info['p']}%, K:{waste_info['k']}%, {waste_info['organic_matter']}% organic matter. {crop_note} {waste_info['notes']} Usage: {waste_info['usage']}",
                         'npk': {
                             'n': waste_info['n'],
                             'p': waste_info['p'],
