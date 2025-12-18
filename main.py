@@ -47,6 +47,271 @@ else:
     # Fallback to default credentials
     db = firestore.Client(project=project_id)
 
+# Agricultural knowledge base with NPK values and crop requirements
+CROP_CATEGORIES = {
+    # Leafy vegetables (high nitrogen requirement)
+    "leafy_vegetables": {
+        "crops": ["spinach", "lettuce", "kale", "swiss-chard", "mustard-greens", "water-spinach", "moringa-leaves", "malabar-spinach", "jute-leaves", "arugula", "sorrel", "endive"],
+        "npk_preference": {"n": "high", "p": "moderate", "k": "low"},
+        "organic_matter": "high"
+    },
+    # Root vegetables (moderate nitrogen, high organic matter)
+    "root_vegetables": {
+        "crops": ["carrot", "radish", "beetroot", "turnip", "parsnip", "sweet-potato", "cassava", "taro", "purple-yam", "arrowroot", "yam-bean"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
+        "organic_matter": "high"
+    },
+    # Fruiting vegetables (balanced NPK)
+    "fruiting_vegetables": {
+        "crops": ["tomato", "eggplant", "bell-pepper", "chili-pepper", "cucumber", "squash", "chayote", "bottle-gourd", "sponge-gourd", "ridge-gourd", "zucchini", "pumpkin"],
+        "npk_preference": {"n": "moderate", "p": "high", "k": "high"},
+        "organic_matter": "moderate"
+    },
+    # Legumes (low nitrogen, high organic matter)
+    "legumes": {
+        "crops": ["green-peas", "snow-peas", "winged-bean", "hyacinth-bean", "yardlong-bean", "mung-bean", "soybean", "peanut"],
+        "npk_preference": {"n": "low", "p": "moderate", "k": "moderate"},
+        "organic_matter": "high"
+    },
+    # Brassica family (high nitrogen, moderate phosphorus)
+    "brassica": {
+        "crops": ["cabbage", "chinese-cabbage", "napa-cabbage", "bok-choy", "broccoli", "cauliflower", "kale"],
+        "npk_preference": {"n": "high", "p": "moderate", "k": "moderate"},
+        "organic_matter": "high"
+    },
+    # Allium family (moderate nitrogen)
+    "allium": {
+        "crops": ["onion", "garlic", "leek", "shallot"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
+        "organic_matter": "moderate"
+    },
+    # Fruits (balanced NPK)
+    "fruits": {
+        "crops": ["banana", "mango", "pineapple", "papaya", "coconut", "jackfruit", "durian", "rambutan", "lanzones", "mangosteen", "guava", "avocado", "calamansi", "pomelo", "orange", "lemon", "lime", "watermelon", "melon", "dragon-fruit", "strawberry", "grapes"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "high"},
+        "organic_matter": "moderate"
+    },
+    # Cereals (moderate N and P)
+    "cereals": {
+        "crops": ["white-rice", "brown-rice", "red-rice", "black-rice", "purple-rice", "glutinous-rice", "aromatic-rice", "lowland-rice", "upland-rice", "yellow-corn", "white-corn", "sweet-corn", "wheat", "sorghum", "millet"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
+        "organic_matter": "moderate"
+    },
+    # Herbs (moderate nitrogen)
+    "herbs": {
+        "crops": ["basil", "oregano", "thyme", "rosemary", "parsley", "cilantro", "dill", "mint"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "low"},
+        "organic_matter": "moderate"
+    }
+}
+
+# Livestock waste NPK database (average values) with aliases
+WASTE_ALIASES = {
+    "cattle": ["cattle", "cow", "bull", "carabao", "kalabaw"],
+    "chicken": ["chicken", "poultry", "hen", "rooster", "pugo"],
+    "pig": ["pig", "swine", "hog", "baboy"],
+    "goat": ["goat", "kanding"],
+    "sheep": ["sheep"],
+    "horse": ["horse", "equine"],
+    "rabbit": ["rabbit", "kuneho"],
+    "duck": ["duck", "itik", "pato"],
+    "quail": ["quail"]
+}
+
+def detect_waste_type(waste_name):
+    """Detect waste type from name using aliases"""
+    waste_name = waste_name.lower()
+    
+    for waste_type, aliases in WASTE_ALIASES.items():
+        for alias in aliases:
+            if alias in waste_name:
+                return waste_type
+    
+    return None
+
+WASTE_NPK = {
+    "cattle": {
+        "n": 2.5,  # %
+        "p": 1.2,
+        "k": 1.8,
+        "organic_matter": 85,  # %
+        "best_for": ["leafy_vegetables", "cereals", "brassica"],
+        "notes": "Well-balanced, excellent for soil structure. Best composted.",
+        "usage": "Compost for 2-3 months before application"
+    },
+    "chicken": {
+        "n": 3.0,
+        "p": 2.5,
+        "k": 1.8,
+        "organic_matter": 75,
+        "best_for": ["leafy_vegetables", "fruiting_vegetables", "cereals"],
+        "notes": "High in nitrogen and phosphorus. Very concentrated.",
+        "usage": "Must be composted or aged 3-6 months. Use at half rate of other manures."
+    },
+    "pig": {
+        "n": 2.0,
+        "p": 2.0,
+        "k": 1.5,
+        "organic_matter": 70,
+        "best_for": ["root_vegetables", "fruiting_vegetables", "fruits"],
+        "notes": "High phosphorus content. Good for root development.",
+        "usage": "Compost thoroughly. Good for fruit and root crops."
+    },
+    "goat": {
+        "n": 2.2,
+        "p": 1.5,
+        "k": 2.0,
+        "organic_matter": 80,
+        "best_for": ["leafy_vegetables", "root_vegetables", "herbs"],
+        "notes": "Mild and less odorous. Good all-purpose manure.",
+        "usage": "Can be used fresh for established plants, compost for seedlings."
+    },
+    "sheep": {
+        "n": 2.0,
+        "p": 1.8,
+        "k": 2.5,
+        "organic_matter": 75,
+        "best_for": ["fruits", "cereals", "brassica"],
+        "notes": "Higher in potassium. Good for fruit quality.",
+        "usage": "Excellent for orchards and fruit trees."
+    },
+    "horse": {
+        "n": 1.5,
+        "p": 1.0,
+        "k": 1.5,
+        "organic_matter": 85,
+        "best_for": ["root_vegetables", "legumes", "herbs"],
+        "notes": "Lower nitrogen, high organic matter. Cool manure.",
+        "usage": "Can be used without composting on established plants."
+    },
+    "rabbit": {
+        "n": 2.4,
+        "p": 1.4,
+        "k": 0.6,
+        "organic_matter": 80,
+        "best_for": ["leafy_vegetables", "vegetables"],
+        "notes": "Cold manure, can be applied directly.",
+        "usage": "Perfect for intensive vegetable production."
+    },
+    "duck": {
+        "n": 2.8,
+        "p": 2.0,
+        "k": 1.2,
+        "organic_matter": 70,
+        "best_for": ["leafy_vegetables", "aquatic_crops"],
+        "notes": "Higher nitrogen than chicken. Wet consistency.",
+        "usage": "Dry and compost before use. Excellent for rice paddies."
+    },
+    "quail": {
+        "n": 3.5,
+        "p": 2.8,
+        "k": 2.0,
+        "organic_matter": 65,
+        "best_for": ["leafy_vegetables", "fruiting_vegetables"],
+        "notes": "Very concentrated. Highest nitrogen content.",
+        "usage": "Use sparingly. Must be well-composted."
+    }
+}
+
+def get_crop_category(crop_id):
+    """Map crop ID to its agricultural category"""
+    crop_id = crop_id.lower().replace('-', ' ').replace('_', ' ')
+    
+    for category, data in CROP_CATEGORIES.items():
+        if crop_id in [c.lower().replace('-', ' ').replace('_', ' ') for c in data["crops"]]:
+            return category
+    
+    # Fallback: try to match by keywords
+    if any(word in crop_id for word in ["rice", "corn", "wheat", "sorghum", "millet"]):
+        return "cereals"
+    elif any(word in crop_id for word in ["tomato", "pepper", "eggplant", "cucumber", "squash"]):
+        return "fruiting_vegetables"
+    elif any(word in crop_id for word in ["spinach", "lettuce", "kale", "greens"]):
+        return "leafy_vegetables"
+    elif any(word in crop_id for word in ["carrot", "radish", "beet", "potato", "turnip"]):
+        return "root_vegetables"
+    elif any(word in crop_id for word in ["pea", "bean", "soy", "peanut"]):
+        return "legumes"
+    elif any(word in crop_id for word in ["cabbage", "broccoli", "cauliflower"]):
+        return "brassica"
+    elif any(word in crop_id for word in ["onion", "garlic", "leek"]):
+        return "allium"
+    elif any(word in crop_id for word in ["mango", "banana", "apple", "orange", "grape"]):
+        return "fruits"
+    elif any(word in crop_id for word in ["basil", "oregano", "thyme", "mint"]):
+        return "herbs"
+    
+    return "general"  # Default category
+
+def calculate_compatibility_score(waste_type, crop_category):
+    """Calculate compatibility score based on NPK matching and crop requirements"""
+    if crop_category not in CROP_CATEGORIES or waste_type not in WASTE_NPK:
+        return 0
+    
+    waste = WASTE_NPK[waste_type]
+    crop_req = CROP_CATEGORIES[crop_category]["npk_preference"]
+    
+    score = 0
+    max_score = 100
+    
+    # NPK matching score (70% of total)
+    npk_score = 0
+    
+    # Nitrogen preference
+    if crop_req["n"] == "high" and waste["n"] >= 2.5:
+        npk_score += 30
+    elif crop_req["n"] == "moderate" and 1.5 <= waste["n"] <= 2.5:
+        npk_score += 30
+    elif crop_req["n"] == "low" and waste["n"] <= 2.0:
+        npk_score += 30
+    else:
+        # Partial match
+        diff = abs(waste["n"] - (2.5 if crop_req["n"] == "high" else 1.5 if crop_req["n"] == "moderate" else 1.0))
+        npk_score += max(0, 30 - diff * 10)
+    
+    # Phosphorus preference
+    if crop_req["p"] == "high" and waste["p"] >= 2.0:
+        npk_score += 20
+    elif crop_req["p"] == "moderate" and 1.0 <= waste["p"] <= 2.0:
+        npk_score += 20
+    elif crop_req["p"] == "low" and waste["p"] <= 1.5:
+        npk_score += 20
+    else:
+        diff = abs(waste["p"] - (2.0 if crop_req["p"] == "high" else 1.5 if crop_req["p"] == "moderate" else 1.0))
+        npk_score += max(0, 20 - diff * 10)
+    
+    # Potassium preference
+    if crop_req["k"] == "high" and waste["k"] >= 2.0:
+        npk_score += 20
+    elif crop_req["k"] == "moderate" and 1.0 <= waste["k"] <= 2.0:
+        npk_score += 20
+    elif crop_req["k"] == "low" and waste["k"] <= 1.5:
+        npk_score += 20
+    else:
+        diff = abs(waste["k"] - (2.0 if crop_req["k"] == "high" else 1.5 if crop_req["k"] == "moderate" else 1.0))
+        npk_score += max(0, 20 - diff * 10)
+    
+    score += npk_score * 0.7
+    
+    # Organic matter preference (20% of total)
+    if CROP_CATEGORIES[crop_category]["organic_matter"] == "high" and waste["organic_matter"] >= 80:
+        score += 20
+    elif CROP_CATEGORIES[crop_category]["organic_matter"] == "moderate" and 70 <= waste["organic_matter"] <= 85:
+        score += 20
+    elif CROP_CATEGORIES[crop_category]["organic_matter"] == "low" and waste["organic_matter"] <= 75:
+        score += 20
+    else:
+        # Partial match
+        target = 85 if CROP_CATEGORIES[crop_category]["organic_matter"] == "high" else 75
+        diff = abs(waste["organic_matter"] - target)
+        score += max(0, 20 - diff * 0.5)
+    
+    # Best for bonus (10% of total)
+    if crop_category in waste["best_for"]:
+        score += 10
+    
+    return min(max_score, score)
+
 def create_semantic_text(listing_data):
     """Create semantic search text from listing data"""
     parts = []
@@ -96,6 +361,10 @@ class BatchCropWasteRequest(BaseModel):
     wasteDescription: str
     cropCategory: Optional[str] = None
     listings: List[Dict[str, Any]]
+
+class CropCompatibilityRequest(BaseModel):
+    cropIds: List[str]  # List of specific crop IDs from user
+    cropCategory: Optional[str] = None  # Optional crop category filter
 
 class EmbedResponse(BaseModel):
     embedding: List[float]
@@ -331,6 +600,121 @@ crop_waste_knowledge = {
         ]
     }
 }
+
+@app.post("/crop-compatibility-analysis")
+async def analyze_crop_compatibility(request: CropCompatibilityRequest):
+    """Analyze crop-waste compatibility using agricultural science rules"""
+    try:
+        # Get all listings from Firestore
+        listings_ref = db.collection('livestock_listings')
+        docs = listings_ref.stream()
+        
+        results = []
+        
+        for doc in docs:
+            listing_data = doc.to_dict()
+            listing_id = doc.id
+            
+            # Skip sold or deleted listings
+            if listing_data.get('status') in ['sold', 'deleted']:
+                continue
+            
+            # Extract waste type from listing name
+            waste_name = listing_data.get('name', '').lower()
+            waste_type = detect_waste_type(waste_name)
+            
+            # If no specific waste type found, skip
+            if not waste_type:
+                continue
+            
+            # Analyze compatibility with each user crop
+            crop_scores = []
+            for crop_id in request.cropIds:
+                # Get crop category
+                crop_category = get_crop_category(crop_id)
+                
+                # Calculate compatibility score using agricultural rules
+                compatibility_score = calculate_compatibility_score(waste_type, crop_category)
+                
+                # Get crop display name
+                crop_name = crop_id.replace('-', ' ').replace('_', ' ').title()
+                
+                if compatibility_score > 30:  # Only include decent matches
+                    crop_scores.append({
+                        'cropId': crop_id,
+                        'cropName': crop_name,
+                        'score': compatibility_score,
+                        'category': crop_category
+                    })
+            
+            # Sort crops by score
+            crop_scores.sort(key=lambda x: x['score'], reverse=True)
+            
+            # Only include if at least one crop has good compatibility (>40%)
+            if crop_scores and crop_scores[0]['score'] > 40:
+                # Create detailed top crops with NPK info
+                top_crops = []
+                for crop in crop_scores[:5]:
+                    waste_info = WASTE_NPK[waste_type]
+                    top_crops.append({
+                        'cropId': crop['cropId'],
+                        'cropName': crop['cropName'],
+                        'score': crop['score'],
+                        'reason': f"{waste_type.title()} manure - N:{waste_info['n']}%, P:{waste_info['p']}%, K:{waste_info['k']}%, {waste_info['organic_matter']}% organic matter. {waste_info['notes']} Usage: {waste_info['usage']}",
+                        'npk': {
+                            'n': waste_info['n'],
+                            'p': waste_info['p'],
+                            'k': waste_info['k'],
+                            'organic_matter': waste_info['organic_matter']
+                        },
+                        'usage': waste_info['usage']
+                    })
+                
+                results.append({
+                    'listingId': listing_id,
+                    'listingData': listing_data,
+                    'wasteType': waste_type,
+                    'cropScores': top_crops
+                })
+        
+        # Sort results by highest compatibility score
+        results.sort(key=lambda x: x['cropScores'][0]['score'], reverse=True)
+        
+        return {
+            'compatibleListings': results,
+            'totalFound': len(results)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/test-compatibility")
+async def test_compatibility():
+    """Test the compatibility system with example crops"""
+    test_crops = ["spinach", "tomato", "carrot", "white-rice", "green-peas"]
+    
+    results = {}
+    for crop_id in test_crops:
+        crop_category = get_crop_category(crop_id)
+        crop_scores = []
+        
+        for waste_type in WASTE_NPK.keys():
+            score = calculate_compatibility_score(waste_type, crop_category)
+            if score > 30:
+                waste_info = WASTE_NPK[waste_type]
+                crop_scores.append({
+                    'wasteType': waste_type,
+                    'score': score,
+                    'reason': f"N:{waste_info['n']}%, P:{waste_info['p']}%, K:{waste_info['k']}%, {waste_info['organic_matter']}% organic matter. {waste_info['notes']}"
+                })
+        
+        crop_scores.sort(key=lambda x: x['score'], reverse=True)
+        results[crop_id] = {
+            'category': crop_category,
+            'top5': crop_scores[:5]
+        }
+    
+    return results
 
 if __name__ == "__main__":
     import uvicorn
