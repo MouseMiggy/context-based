@@ -1243,7 +1243,19 @@ async def analyze_crop_compatibility(request: CropCompatibilityRequest):
                 for crop in crop_scores[:5]:
                     waste_info = WASTE_NPK[waste_type]
                     crop_id_clean = crop['cropId'].lower().replace('-', ' ').replace('_', ' ')
-                    crop_note = INDIVIDUAL_CROP_NPK.get(crop_id_clean, {}).get('note', f"Suitable for {crop['category'].replace('_', ' ')}")
+                    crop_id_hyphen = crop['cropId'].lower().replace('_', '-')
+                    
+                    # Try multiple formats to find the crop note
+                    crop_note = None
+                    if crop_id_clean in INDIVIDUAL_CROP_NPK:
+                        crop_note = INDIVIDUAL_CROP_NPK[crop_id_clean].get('note', '')
+                    elif crop_id_hyphen in INDIVIDUAL_CROP_NPK:
+                        crop_note = INDIVIDUAL_CROP_NPK[crop_id_hyphen].get('note', '')
+                    elif crop['cropId'] in INDIVIDUAL_CROP_NPK:
+                        crop_note = INDIVIDUAL_CROP_NPK[crop['cropId']].get('note', '')
+                    
+                    if not crop_note:
+                        crop_note = f"Suitable for {crop['category'].replace('_', ' ')}"
                     
                     top_crops.append({
                         'cropId': crop['cropId'],
