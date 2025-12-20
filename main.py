@@ -110,16 +110,20 @@ CROP_CATEGORIES = {
 }
 
 # Livestock waste NPK database (average values) with aliases
+# Matching mobile app livestock types
 WASTE_ALIASES = {
-    "cattle": ["cattle", "cow", "bull", "carabao", "kalabaw"],
-    "chicken": ["chicken", "poultry", "hen", "rooster", "pugo"],
-    "pig": ["pig", "swine", "hog", "baboy"],
-    "goat": ["goat", "kanding"],
-    "sheep": ["sheep"],
-    "horse": ["horse", "equine"],
-    "rabbit": ["rabbit", "kuneho"],
-    "duck": ["duck", "itik", "pato"],
-    "quail": ["quail"]
+    "cattle": ["cattle", "cow", "bull", "carabao", "kalabaw", "ox", "oxen"],
+    "chicken": ["chicken", "poultry", "hen", "rooster", "pugo", "manok"],
+    "pig": ["pig", "swine", "hog", "baboy", "pork"],
+    "goat": ["goat", "kanding", "kambing", "kid"],
+    "sheep": ["sheep", "lamb", "tupa"],
+    "horse": ["horse", "equine", "donkey", "mule", "kabayo"],
+    "rabbit": ["rabbit", "kuneho", "bunny"],
+    "duck": ["duck", "itik", "pato", "mallard"],
+    "quail": ["quail", "pugo"],
+    "turkey": ["turkey", "pabo"],
+    "silkworm": ["silkworm", "silk worm", "bombyx", "mulberry worm"],
+    "ostrich": ["ostrich", "avestruz"]
 }
 
 def detect_waste_type(waste_name):
@@ -214,6 +218,33 @@ WASTE_NPK = {
         "best_for": ["vegetables", "fruits"],
         "notes": "Very concentrated. Highest nitrogen content.",
         "usage": "Use sparingly. Must be well-composted."
+    },
+    "turkey": {
+        "n": 2.8,
+        "p": 2.3,
+        "k": 1.5,
+        "organic_matter": 70,
+        "best_for": ["vegetables", "corn", "fruits"],
+        "notes": "Similar to chicken manure. High nitrogen content.",
+        "usage": "Compost for 3-4 months before use. Good for heavy feeders."
+    },
+    "silkworm": {
+        "n": 4.0,
+        "p": 1.8,
+        "k": 1.2,
+        "organic_matter": 60,
+        "best_for": ["vegetables", "fruits", "herbs_spices"],
+        "notes": "Very high nitrogen content. Rich in protein. Excellent for mulberry and vegetable gardens.",
+        "usage": "Can be used fresh or composted. Mix with soil or use as top dressing."
+    },
+    "ostrich": {
+        "n": 2.2,
+        "p": 1.5,
+        "k": 1.8,
+        "organic_matter": 75,
+        "best_for": ["vegetables", "fruits", "root_crops"],
+        "notes": "Well-balanced manure. Lower odor than poultry. Good for general use.",
+        "usage": "Compost for 2-3 months. Excellent for gardens and orchards."
     }
 }
 
@@ -1266,11 +1297,21 @@ async def analyze_crop_compatibility(request: CropCompatibilityRequest):
                     if not crop_note:
                         crop_note = f"Suitable for {crop['category'].replace('_', ' ')}"
                     
+                    # Create a well-formatted, readable reason
+                    reason_parts = [
+                        f"🌱 {crop_note}",
+                        f"📊 NPK: {waste_info['n']}% N, {waste_info['p']}% P, {waste_info['k']}% K",
+                        f"🍂 {waste_info['organic_matter']}% organic matter",
+                        f"💡 {waste_info['notes']}",
+                        f"✅ {waste_info['usage']}"
+                    ]
+                    formatted_reason = "\n".join(reason_parts)
+                    
                     top_crops.append({
                         'cropId': crop['cropId'],
                         'cropName': crop['cropName'],
                         'score': crop['score'],
-                        'reason': f"{waste_type.title()} manure - N:{waste_info['n']}%, P:{waste_info['p']}%, K:{waste_info['k']}%, {waste_info['organic_matter']}% organic matter. {crop_note} {waste_info['notes']} Usage: {waste_info['usage']}",
+                        'reason': formatted_reason,
                         'npk': {
                             'n': waste_info['n'],
                             'p': waste_info['p'],
