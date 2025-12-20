@@ -1345,6 +1345,8 @@ async def semantic_search_listings(request: SemanticSearchRequest):
     Interprets the search query as agricultural intent for finding suitable organic fertilizer.
     """
     try:
+        print(f"🔍 Semantic search request: query='{request.searchQuery}', crops={len(request.cropIds or [])}")
+        
         # Validate query
         if not request.searchQuery or not request.searchQuery.strip():
             raise HTTPException(status_code=400, detail="Search query is required")
@@ -1359,19 +1361,22 @@ async def semantic_search_listings(request: SemanticSearchRequest):
         and organic farming practices.
         """
         
+        print("📊 Generating query embedding...")
         # Generate embedding for the enhanced query (once)
         query_embedding = model.encode(enhanced_query.strip(), convert_to_numpy=True)
         
         if np.linalg.norm(query_embedding) == 0:
             raise HTTPException(status_code=500, detail="Query embedding is zero vector")
         
-        # Fetch all listings from Firestore (limit to recent 50 for performance)
-        listings_ref = db.collection('livestock_listings').order_by('createdAt', direction=firestore.Query.DESCENDING).limit(50)
+        print("📥 Fetching listings from Firestore...")
+        # Fetch all listings from Firestore (limit to recent 30 for performance)
+        listings_ref = db.collection('livestock_listings').order_by('createdAt', direction=firestore.Query.DESCENDING).limit(30)
         docs = listings_ref.stream()
         
         results = []
         processed_count = 0
         
+        print("🔄 Processing listings...")
         for doc in docs:
             listing_data = doc.to_dict()
             listing_id = doc.id
@@ -1433,7 +1438,7 @@ async def semantic_search_listings(request: SemanticSearchRequest):
                 'cropScores': crop_scores[:10] if crop_scores else []
             })
         
-        print(f"Semantic search processed {processed_count} listings, found {len(results)} results")
+        print(f"✅ Semantic search processed {processed_count} listings, found {len(results)} results")
         
         # Sort by final score and limit top_k
         results.sort(key=lambda x: x['finalScore'], reverse=True)
@@ -1445,11 +1450,14 @@ async def semantic_search_listings(request: SemanticSearchRequest):
         }
         
     except HTTPException as http_err:
+        print(f"❌ HTTP Exception: {http_err.detail}")
         raise http_err
     except Exception as e:
         # Catch-all for unexpected errors
-        print("Semantic search error:", e)
-        raise HTTPException(status_code=500, detail="Internal server error during semantic search")
+        print(f"❌ Semantic search error: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.post("/crop-compatibility-analysis")
 async def analyze_crop_compatibility(request: CropCompatibilityRequest):
