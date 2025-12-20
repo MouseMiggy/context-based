@@ -1226,6 +1226,112 @@ crop_waste_knowledge = {
     }
 }
 
+class SemanticSearchRequest(BaseModel):
+    searchQuery: str
+    cropIds: List[str]
+    cropCategory: Optional[str] = None
+    top_k: int = 20
+
+@app.post("/semantic-search-listings")
+async def semantic_search_listings(request: SemanticSearchRequest):
+    """
+    Semantic search for livestock waste listings based on crop farmer's search intent.
+    Interprets the search query as agricultural intent for finding suitable organic fertilizer.
+    """
+    try:
+        # Enhance the search query with agricultural context
+        enhanced_query = f"""
+        Agricultural search intent: {request.searchQuery}
+        
+        Context: A crop farmer is looking for livestock waste that can be used as organic fertilizer 
+        or soil improvement for their crops. They want waste that is suitable for farming, 
+        provides good nutrients, and helps improve soil quality. Focus on agricultural benefits, 
+        crop suitability, and organic farming practices.
+        """
+        
+        # Generate embedding for the enhanced query
+        query_embedding = model.encode(enhanced_query.strip(), convert_to_numpy=True)
+        
+        # Get all listings from Firestore
+        listings_ref = db.collection('livestock_listings')
+        docs = listings_ref.stream()
+        
+        results = []
+        
+        for doc in docs:
+            listing_data = doc.to_dict()
+            listing_id = doc.id
+            
+            # Skip sold or deleted listings
+            if listing_data.get('status') in ['sold', 'deleted']:
+                continue
+            
+            # Create semantic text for the listing
+            semantic_text = create_semantic_text(listing_data)
+            
+            if not semantic_text.strip():
+                continue
+            
+            # Generate embedding for the listing
+            listing_embedding = model.encode(semantic_text, convert_to_numpy=True)
+            
+            # Calculate cosine similarity
+            similarity = np.dot(query_embedding, listing_embedding) / (
+                np.linalg.norm(query_embedding) * np.linalg.norm(listing_embedding)
+            )
+            
+            # Also calculate crop compatibility if user has crops
+            crop_scores = []
+            if request.cropIds:
+                waste_name = listing_data.get('name', '').lower()
+                waste_type = detect_waste_type(waste_name)
+                
+                if waste_type:
+                    for crop_id in request.cropIds:
+                        crop_category = get_crop_category(crop_id)
+                        compatibility_score = calculate_compatibility_score(waste_type, crop_category, crop_id)
+                        
+                        if compatibility_score > 0:
+                            crop_name = crop_id.replace('-', ' ').replace('_', ' ').title()
+                            crop_scores.append({
+                                'cropId': crop_id,
+                                'cropName': crop_name,
+                                'score': compatibility_score,
+                                'category': crop_category
+                            })
+            
+            # Sort crops by score
+            crop_scores.sort(key=lambda x: x['score'], reverse=True)
+            
+            # Combine semantic similarity with crop compatibility
+            # 60% semantic similarity + 40% crop compatibility
+            final_score = similarity * 0.6
+            if crop_scores:
+                avg_crop_score = sum(c['score'] for c in crop_scores) / len(crop_scores)
+                final_score += (avg_crop_score / 100) * 0.4
+            
+            results.append({
+                'listingId': listing_id,
+                'listingData': listing_data,
+                'semanticScore': float(similarity),
+                'finalScore': float(final_score),
+                'cropScores': crop_scores[:10] if crop_scores else []  # Top 10 crops
+            })
+        
+        # Sort by final score
+        results.sort(key=lambda x: x['finalScore'], reverse=True)
+        
+        # Return top_k results
+        top_results = results[:request.top_k]
+        
+        return {
+            'listings': top_results,
+            'totalFound': len(top_results)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/crop-compatibility-analysis")
 async def analyze_crop_compatibility(request: CropCompatibilityRequest):
     """Analyze crop-waste compatibility using agricultural science rules"""
