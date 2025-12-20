@@ -48,60 +48,64 @@ else:
     db = firestore.Client(project=project_id)
 
 # Agricultural knowledge base with NPK values and crop requirements
+# Matching the mobile app crop types exactly
 CROP_CATEGORIES = {
-    # Leafy vegetables (high nitrogen requirement)
-    "leafy_vegetables": {
-        "crops": ["spinach", "lettuce", "kale", "swiss-chard", "mustard-greens", "water-spinach", "moringa-leaves", "malabar-spinach", "jute-leaves", "arugula", "sorrel", "endive"],
-        "npk_preference": {"n": "high", "p": "moderate", "k": "low"},
-        "organic_matter": "high"
-    },
-    # Root vegetables (moderate nitrogen, high organic matter)
-    "root_vegetables": {
-        "crops": ["carrot", "radish", "beetroot", "turnip", "parsnip", "sweet-potato", "cassava", "taro", "purple-yam", "arrowroot", "yam-bean"],
+    # Rice (high nitrogen for vegetative growth)
+    "rice": {
+        "crops": ["white-rice", "brown-rice", "red-rice", "black-rice", "purple-rice", "glutinous-rice", "aromatic-rice", "lowland-rice", "upland-rice", "heirloom-rice", "organic-rice"],
         "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
-        "organic_matter": "high"
-    },
-    # Fruiting vegetables (balanced NPK)
-    "fruiting_vegetables": {
-        "crops": ["tomato", "eggplant", "bell-pepper", "chili-pepper", "cucumber", "squash", "chayote", "bottle-gourd", "sponge-gourd", "ridge-gourd", "zucchini", "pumpkin"],
-        "npk_preference": {"n": "moderate", "p": "high", "k": "high"},
         "organic_matter": "moderate"
     },
-    # Legumes (low nitrogen, high organic matter)
+    # Corn (moderate to high nitrogen)
+    "corn": {
+        "crops": ["yellow-corn", "white-corn", "sweet-corn", "glutinous-corn", "popcorn", "feed-corn", "hybrid-corn", "native-corn", "baby-corn"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
+        "organic_matter": "moderate"
+    },
+    # Vegetables (includes leafy, fruiting, and brassica)
+    "vegetables": {
+        "crops": ["spinach", "lettuce", "kale", "cabbage", "bok-choy", "water-spinach", "moringa-leaves", "malabar-spinach", "jute-leaves", "chinese-cabbage", "napa-cabbage", 
+                  "tomato", "eggplant", "bitter-gourd", "squash", "cucumber", "bell-pepper", "chili-pepper", "chayote", "bottle-gourd", "sponge-gourd", "ridge-gourd", "zucchini", "pumpkin",
+                  "carrot", "radish", "beetroot", "turnip", "parsnip", "onion", "garlic", "leek", "shallot", "asparagus", "broccoli", "cauliflower"],
+        "npk_preference": {"n": "high", "p": "moderate", "k": "moderate"},
+        "organic_matter": "high"
+    },
+    # Fruits (tree fruits and berries)
+    "fruits": {
+        "crops": ["banana", "mango", "pineapple", "papaya", "coconut", "jackfruit", "durian", "rambutan", "lanzones", "mangosteen", "guava", "avocado", 
+                  "calamansi", "pomelo", "orange", "lemon", "lime", "watermelon", "melon", "dragon-fruit", "strawberry", "grapes"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "high"},
+        "organic_matter": "moderate"
+    },
+    # Legumes (nitrogen-fixing plants)
     "legumes": {
         "crops": ["green-peas", "snow-peas", "winged-bean", "hyacinth-bean", "yardlong-bean", "mung-bean", "soybean", "peanut"],
         "npk_preference": {"n": "low", "p": "moderate", "k": "moderate"},
         "organic_matter": "high"
     },
-    # Brassica family (high nitrogen, moderate phosphorus)
-    "brassica": {
-        "crops": ["cabbage", "chinese-cabbage", "napa-cabbage", "bok-choy", "broccoli", "cauliflower", "kale"],
-        "npk_preference": {"n": "high", "p": "moderate", "k": "moderate"},
+    # Root Crops (tubers and root vegetables)
+    "root_crops": {
+        "crops": ["potato", "sweet-potato", "cassava", "taro", "purple-yam", "arrowroot", "yam-bean"],
+        "npk_preference": {"n": "moderate", "p": "high", "k": "moderate"},
         "organic_matter": "high"
     },
-    # Allium family (moderate nitrogen)
-    "allium": {
-        "crops": ["onion", "garlic", "leek", "shallot"],
-        "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
-        "organic_matter": "moderate"
-    },
-    # Fruits (balanced NPK)
-    "fruits": {
-        "crops": ["banana", "mango", "pineapple", "papaya", "coconut", "jackfruit", "durian", "rambutan", "lanzones", "mangosteen", "guava", "avocado", "calamansi", "pomelo", "orange", "lemon", "lime", "watermelon", "melon", "dragon-fruit", "strawberry", "grapes"],
-        "npk_preference": {"n": "moderate", "p": "moderate", "k": "high"},
-        "organic_matter": "moderate"
-    },
-    # Cereals (moderate N and P)
-    "cereals": {
-        "crops": ["white-rice", "brown-rice", "red-rice", "black-rice", "purple-rice", "glutinous-rice", "aromatic-rice", "lowland-rice", "upland-rice", "yellow-corn", "white-corn", "sweet-corn", "wheat", "sorghum", "millet"],
-        "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
-        "organic_matter": "moderate"
-    },
-    # Herbs (moderate nitrogen)
-    "herbs": {
-        "crops": ["basil", "oregano", "thyme", "rosemary", "parsley", "cilantro", "dill", "mint"],
+    # Herbs and Spices
+    "herbs_spices": {
+        "crops": ["basil", "oregano", "thyme", "rosemary", "parsley", "cilantro", "dill", "mint", "ginger", "turmeric", "lemongrass"],
         "npk_preference": {"n": "moderate", "p": "moderate", "k": "low"},
         "organic_matter": "moderate"
+    },
+    # Industrial Crops (cash crops)
+    "industrial_crops": {
+        "crops": ["coffee", "cacao", "sugarcane", "cotton", "tobacco", "rubber"],
+        "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
+        "organic_matter": "moderate"
+    },
+    # Mushrooms (high organic matter needs)
+    "mushrooms": {
+        "crops": ["oyster-mushroom", "button-mushroom", "shiitake"],
+        "npk_preference": {"n": "low", "p": "moderate", "k": "moderate"},
+        "organic_matter": "very_high"
     }
 }
 
@@ -135,7 +139,7 @@ WASTE_NPK = {
         "p": 1.2,
         "k": 1.8,
         "organic_matter": 85,  # %
-        "best_for": ["leafy_vegetables", "cereals", "brassica"],
+        "best_for": ["vegetables", "rice", "corn"],
         "notes": "Well-balanced, excellent for soil structure. Best composted.",
         "usage": "Compost for 2-3 months before application"
     },
@@ -144,7 +148,7 @@ WASTE_NPK = {
         "p": 2.5,
         "k": 1.8,
         "organic_matter": 75,
-        "best_for": ["leafy_vegetables", "fruiting_vegetables", "cereals"],
+        "best_for": ["vegetables", "rice", "corn"],
         "notes": "High in nitrogen and phosphorus. Very concentrated.",
         "usage": "Must be composted or aged 3-6 months. Use at half rate of other manures."
     },
@@ -153,7 +157,7 @@ WASTE_NPK = {
         "p": 2.0,
         "k": 1.5,
         "organic_matter": 70,
-        "best_for": ["root_vegetables", "fruiting_vegetables", "fruits"],
+        "best_for": ["root_crops", "vegetables", "fruits"],
         "notes": "High phosphorus content. Good for root development.",
         "usage": "Compost thoroughly. Good for fruit and root crops."
     },
@@ -162,7 +166,7 @@ WASTE_NPK = {
         "p": 1.5,
         "k": 2.0,
         "organic_matter": 80,
-        "best_for": ["leafy_vegetables", "root_vegetables", "herbs"],
+        "best_for": ["vegetables", "root_crops", "herbs_spices"],
         "notes": "Mild and less odorous. Good all-purpose manure.",
         "usage": "Can be used fresh for established plants, compost for seedlings."
     },
@@ -171,7 +175,7 @@ WASTE_NPK = {
         "p": 1.8,
         "k": 2.5,
         "organic_matter": 75,
-        "best_for": ["fruits", "cereals", "brassica"],
+        "best_for": ["fruits", "rice", "corn"],
         "notes": "Higher in potassium. Good for fruit quality.",
         "usage": "Excellent for orchards and fruit trees."
     },
@@ -180,7 +184,7 @@ WASTE_NPK = {
         "p": 1.0,
         "k": 1.5,
         "organic_matter": 85,
-        "best_for": ["root_vegetables", "legumes", "herbs"],
+        "best_for": ["root_crops", "legumes", "herbs_spices"],
         "notes": "Lower nitrogen, high organic matter. Cool manure.",
         "usage": "Can be used without composting on established plants."
     },
@@ -189,7 +193,7 @@ WASTE_NPK = {
         "p": 1.4,
         "k": 0.6,
         "organic_matter": 80,
-        "best_for": ["leafy_vegetables", "vegetables"],
+        "best_for": ["vegetables", "herbs_spices"],
         "notes": "Cold manure, can be applied directly.",
         "usage": "Perfect for intensive vegetable production."
     },
@@ -198,7 +202,7 @@ WASTE_NPK = {
         "p": 2.0,
         "k": 1.2,
         "organic_matter": 70,
-        "best_for": ["leafy_vegetables", "aquatic_crops"],
+        "best_for": ["vegetables", "rice"],
         "notes": "Higher nitrogen than chicken. Wet consistency.",
         "usage": "Dry and compost before use. Excellent for rice paddies."
     },
@@ -207,7 +211,7 @@ WASTE_NPK = {
         "p": 2.8,
         "k": 2.0,
         "organic_matter": 65,
-        "best_for": ["leafy_vegetables", "fruiting_vegetables"],
+        "best_for": ["vegetables", "fruits"],
         "notes": "Very concentrated. Highest nitrogen content.",
         "usage": "Use sparingly. Must be well-composted."
     }
@@ -736,34 +740,34 @@ INDIVIDUAL_CROP_NPK = {
 }
 
 def get_crop_category(crop_id):
-    """Map crop ID to its agricultural category"""
+    """Map crop ID to its agricultural category - matching mobile app crop types"""
     crop_id = crop_id.lower().replace('-', ' ').replace('_', ' ')
     
     for category, data in CROP_CATEGORIES.items():
         if crop_id in [c.lower().replace('-', ' ').replace('_', ' ') for c in data["crops"]]:
             return category
     
-    # Fallback: try to match by keywords
-    if any(word in crop_id for word in ["rice", "corn", "wheat", "sorghum", "millet"]):
-        return "cereals"
-    elif any(word in crop_id for word in ["tomato", "pepper", "eggplant", "cucumber", "squash"]):
-        return "fruiting_vegetables"
-    elif any(word in crop_id for word in ["spinach", "lettuce", "kale", "greens"]):
-        return "leafy_vegetables"
-    elif any(word in crop_id for word in ["carrot", "radish", "beet", "potato", "turnip"]):
-        return "root_vegetables"
-    elif any(word in crop_id for word in ["pea", "bean", "soy", "peanut"]):
-        return "legumes"
-    elif any(word in crop_id for word in ["cabbage", "broccoli", "cauliflower"]):
-        return "brassica"
-    elif any(word in crop_id for word in ["onion", "garlic", "leek"]):
-        return "allium"
-    elif any(word in crop_id for word in ["mango", "banana", "apple", "orange", "grape"]):
+    # Fallback: try to match by keywords to mobile app categories
+    if any(word in crop_id for word in ["rice"]):
+        return "rice"
+    elif any(word in crop_id for word in ["corn", "maize"]):
+        return "corn"
+    elif any(word in crop_id for word in ["tomato", "pepper", "eggplant", "cucumber", "squash", "spinach", "lettuce", "kale", "cabbage", "carrot", "radish", "onion", "garlic", "broccoli", "cauliflower"]):
+        return "vegetables"
+    elif any(word in crop_id for word in ["mango", "banana", "apple", "orange", "grape", "coconut", "papaya", "pineapple", "melon", "watermelon"]):
         return "fruits"
-    elif any(word in crop_id for word in ["basil", "oregano", "thyme", "mint"]):
-        return "herbs"
+    elif any(word in crop_id for word in ["pea", "bean", "soy", "peanut", "lentil"]):
+        return "legumes"
+    elif any(word in crop_id for word in ["potato", "sweet potato", "cassava", "taro", "yam"]):
+        return "root_crops"
+    elif any(word in crop_id for word in ["basil", "oregano", "thyme", "mint", "herb", "spice", "ginger", "turmeric"]):
+        return "herbs_spices"
+    elif any(word in crop_id for word in ["coffee", "cacao", "sugar", "cotton", "tobacco"]):
+        return "industrial_crops"
+    elif any(word in crop_id for word in ["mushroom"]):
+        return "mushrooms"
     
-    return "general"  # Default category
+    return "vegetables"  # Default to vegetables as most common
 
 def calculate_compatibility_score(waste_type, crop_category, crop_id=None):
     """Calculate compatibility score based on NPK matching and crop requirements"""
@@ -798,76 +802,80 @@ def calculate_compatibility_score(waste_type, crop_category, crop_id=None):
         crop_note = f"Suitable for {crop_category.replace('_', ' ')}"
         print(f"DEBUG: Using category preferences for {crop_category}")
     
-    score = 0
+    # Start with a baseline score to ensure all crops get some score
+    score = 15  # Baseline score (was 0)
     max_score = 100
     
-    # NPK matching score (70% of total)
+    # NPK matching score (70% of total, but now 55% since we have 15% baseline)
     npk_score = 0
     
-    # Nitrogen preference - handle very_high
+    # Nitrogen preference - handle very_high and very_low
     n_target = {
         "very_high": 3.0,
         "high": 2.5,
         "moderate": 1.5,
-        "low": 1.0
+        "low": 1.0,
+        "very_low": 0.5
     }.get(crop_req["n"], 1.5)
     
-    if crop_req["n"] == "very_high" and waste["n"] >= 3.0:
-        npk_score += 30
-    elif crop_req["n"] == "high" and waste["n"] >= 2.5:
-        npk_score += 30
-    elif crop_req["n"] == "moderate" and 1.5 <= waste["n"] <= 2.5:
-        npk_score += 30
-    elif crop_req["n"] == "low" and waste["n"] <= 2.0:
-        npk_score += 30
+    # More lenient matching - give partial credit
+    n_diff = abs(waste["n"] - n_target)
+    if n_diff <= 0.5:
+        npk_score += 30  # Perfect or near-perfect match
+    elif n_diff <= 1.0:
+        npk_score += 25  # Good match
+    elif n_diff <= 1.5:
+        npk_score += 20  # Acceptable match
+    elif n_diff <= 2.0:
+        npk_score += 15  # Marginal match
     else:
-        # Partial match
-        diff = abs(waste["n"] - n_target)
-        npk_score += max(0, 30 - diff * 10)
+        npk_score += 10  # Still give some credit
     
-    # Phosphorus preference
+    # Phosphorus preference - more lenient
     p_target = {
         "very_high": 2.5,
         "high": 2.0,
         "moderate": 1.5,
-        "low": 1.0
+        "low": 1.0,
+        "very_low": 0.5
     }.get(crop_req["p"], 1.5)
     
-    if crop_req["p"] == "very_high" and waste["p"] >= 2.5:
-        npk_score += 20
-    elif crop_req["p"] == "high" and waste["p"] >= 2.0:
-        npk_score += 20
-    elif crop_req["p"] == "moderate" and 1.0 <= waste["p"] <= 2.0:
-        npk_score += 20
-    elif crop_req["p"] == "low" and waste["p"] <= 1.5:
-        npk_score += 20
+    p_diff = abs(waste["p"] - p_target)
+    if p_diff <= 0.5:
+        npk_score += 20  # Perfect or near-perfect match
+    elif p_diff <= 1.0:
+        npk_score += 17  # Good match
+    elif p_diff <= 1.5:
+        npk_score += 14  # Acceptable match
+    elif p_diff <= 2.0:
+        npk_score += 10  # Marginal match
     else:
-        diff = abs(waste["p"] - p_target)
-        npk_score += max(0, 20 - diff * 10)
+        npk_score += 7  # Still give some credit
     
-    # Potassium preference - handle very_high
+    # Potassium preference - more lenient
     k_target = {
         "very_high": 2.5,
         "high": 2.0,
         "moderate": 1.5,
-        "low": 1.0
+        "low": 1.0,
+        "very_low": 0.5
     }.get(crop_req["k"], 1.5)
     
-    if crop_req["k"] == "very_high" and waste["k"] >= 2.5:
-        npk_score += 20
-    elif crop_req["k"] == "high" and waste["k"] >= 2.0:
-        npk_score += 20
-    elif crop_req["k"] == "moderate" and 1.0 <= waste["k"] <= 2.0:
-        npk_score += 20
-    elif crop_req["k"] == "low" and waste["k"] <= 1.5:
-        npk_score += 20
+    k_diff = abs(waste["k"] - k_target)
+    if k_diff <= 0.5:
+        npk_score += 20  # Perfect or near-perfect match
+    elif k_diff <= 1.0:
+        npk_score += 17  # Good match
+    elif k_diff <= 1.5:
+        npk_score += 14  # Acceptable match
+    elif k_diff <= 2.0:
+        npk_score += 10  # Marginal match
     else:
-        diff = abs(waste["k"] - k_target)
-        npk_score += max(0, 20 - diff * 10)
+        npk_score += 7  # Still give some credit
     
     score += npk_score * 0.7
     
-    # Organic matter preference (20% of total)
+    # Organic matter preference (15% of total, reduced from 20%)
     om_target = {
         "very_high": 90,
         "high": 85,
@@ -875,21 +883,21 @@ def calculate_compatibility_score(waste_type, crop_category, crop_id=None):
         "low": 70
     }.get(crop_req.get("organic_matter", "moderate"), 75)
     
-    if crop_req.get("organic_matter") == "very_high" and waste["organic_matter"] >= 90:
-        score += 20
-    elif crop_req.get("organic_matter") == "high" and waste["organic_matter"] >= 80:
-        score += 20
-    elif crop_req.get("organic_matter") == "moderate" and 70 <= waste["organic_matter"] <= 85:
-        score += 20
-    elif crop_req.get("organic_matter") == "low" and waste["organic_matter"] <= 75:
-        score += 20
+    om_diff = abs(waste["organic_matter"] - om_target)
+    if om_diff <= 5:
+        score += 15  # Perfect match
+    elif om_diff <= 10:
+        score += 12  # Good match
+    elif om_diff <= 15:
+        score += 9  # Acceptable match
     else:
-        diff = abs(waste["organic_matter"] - om_target)
-        score += max(0, 20 - diff * 0.5)
+        score += 6  # Still give some credit
     
     # Best for bonus (10% of total)
     if crop_category in waste["best_for"]:
         score += 10
+    else:
+        score += 5  # Give partial credit even if not in best_for list
     
     # Store the crop note for use in the response
     if not hasattr(calculate_compatibility_score, '_crop_notes'):
@@ -1225,7 +1233,8 @@ async def analyze_crop_compatibility(request: CropCompatibilityRequest):
                 # Get crop display name
                 crop_name = crop_id.replace('-', ' ').replace('_', ' ').title()
                 
-                if compatibility_score > 30:  # Only include decent matches
+                # Include all crops with any positive score (lowered threshold)
+                if compatibility_score > 0:
                     crop_scores.append({
                         'cropId': crop_id,
                         'cropName': crop_name,
@@ -1236,8 +1245,8 @@ async def analyze_crop_compatibility(request: CropCompatibilityRequest):
             # Sort crops by score
             crop_scores.sort(key=lambda x: x['score'], reverse=True)
             
-            # Only include if at least one crop has good compatibility (>40%)
-            if crop_scores and crop_scores[0]['score'] > 40:
+            # Include listing if it has any compatible crops (very lenient)
+            if crop_scores and len(crop_scores) > 0:
                 # Create detailed crops with NPK info for ALL user crops (no limit)
                 top_crops = []
                 for crop in crop_scores:  # Return ALL crops, not just top 5
