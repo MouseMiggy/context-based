@@ -1365,11 +1365,12 @@ async def semantic_search_listings(request: SemanticSearchRequest):
         if np.linalg.norm(query_embedding) == 0:
             raise HTTPException(status_code=500, detail="Query embedding is zero vector")
         
-        # Fetch all listings from Firestore
-        listings_ref = db.collection('livestock_listings')
+        # Fetch all listings from Firestore (limit to recent 50 for performance)
+        listings_ref = db.collection('livestock_listings').order_by('createdAt', direction=firestore.Query.DESCENDING).limit(50)
         docs = listings_ref.stream()
         
         results = []
+        processed_count = 0
         
         for doc in docs:
             listing_data = doc.to_dict()
@@ -1378,6 +1379,8 @@ async def semantic_search_listings(request: SemanticSearchRequest):
             # Skip sold or deleted listings
             if listing_data.get('status') in ['sold', 'deleted']:
                 continue
+            
+            processed_count += 1
             
             # OPTION 1: Generate embedding on-the-fly
             semantic_text = create_semantic_text(listing_data)
@@ -1429,6 +1432,8 @@ async def semantic_search_listings(request: SemanticSearchRequest):
                 'finalScore': float(final_score),
                 'cropScores': crop_scores[:10] if crop_scores else []
             })
+        
+        print(f"Semantic search processed {processed_count} listings, found {len(results)} results")
         
         # Sort by final score and limit top_k
         results.sort(key=lambda x: x['finalScore'], reverse=True)
