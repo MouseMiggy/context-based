@@ -1238,9 +1238,9 @@ async def analyze_crop_compatibility(request: CropCompatibilityRequest):
             
             # Only include if at least one crop has good compatibility (>40%)
             if crop_scores and crop_scores[0]['score'] > 40:
-                # Create detailed top crops with NPK info
+                # Create detailed crops with NPK info for ALL user crops (no limit)
                 top_crops = []
-                for crop in crop_scores[:5]:
+                for crop in crop_scores:  # Return ALL crops, not just top 5
                     waste_info = WASTE_NPK[waste_type]
                     crop_id_clean = crop['cropId'].lower().replace('-', ' ').replace('_', ' ')
                     crop_id_hyphen = crop['cropId'].lower().replace('_', '-')
