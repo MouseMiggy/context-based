@@ -991,6 +991,12 @@ class CropCompatibilityRequest(BaseModel):
     cropIds: List[str]  # List of specific crop IDs from user
     cropCategory: Optional[str] = None  # Optional crop category filter
 
+class SemanticSearchRequest(BaseModel):
+    searchQuery: str
+    cropIds: List[str]
+    cropCategory: Optional[str] = None
+    top_k: int = 20
+
 class EmbedResponse(BaseModel):
     embedding: List[float]
 
@@ -1331,6 +1337,114 @@ async def semantic_search_listings(request: SemanticSearchRequest):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/semantic-search-listings")
+async def semantic_search_listings(request: SemanticSearchRequest):
+    """
+    Semantic search for livestock waste listings based on crop farmer's search intent.
+    Interprets the search query as agricultural intent for finding suitable organic fertilizer.
+    """
+    try:
+        # Validate query
+        if not request.searchQuery or not request.searchQuery.strip():
+            raise HTTPException(status_code=400, detail="Search query is required")
+        
+        # Enhance the search query with agricultural context
+        enhanced_query = f"""
+        Agricultural search intent: {request.searchQuery}
+        
+        Context: A crop farmer is looking for livestock waste that can be used as organic fertilizer 
+        or soil improvement for their crops. They want waste suitable for farming, providing good 
+        nutrients and improving soil quality. Focus on agricultural benefits, crop suitability, 
+        and organic farming practices.
+        """
+        
+        # Generate embedding for the enhanced query (once)
+        query_embedding = model.encode(enhanced_query.strip(), convert_to_numpy=True)
+        
+        if np.linalg.norm(query_embedding) == 0:
+            raise HTTPException(status_code=500, detail="Query embedding is zero vector")
+        
+        # Fetch all listings from Firestore
+        listings_ref = db.collection('livestock_listings')
+        docs = listings_ref.stream()
+        
+        results = []
+        
+        for doc in docs:
+            listing_data = doc.to_dict()
+            listing_id = doc.id
+            
+            # Skip sold or deleted listings
+            if listing_data.get('status') in ['sold', 'deleted']:
+                continue
+            
+            # OPTION 1: Generate embedding on-the-fly
+            semantic_text = create_semantic_text(listing_data)
+            if not semantic_text.strip():
+                continue
+            
+            listing_embedding = model.encode(semantic_text, convert_to_numpy=True)
+            
+            if np.linalg.norm(listing_embedding) == 0:
+                continue  # Skip zero vectors
+            
+            # Compute cosine similarity
+            similarity = np.dot(query_embedding, listing_embedding) / (
+                np.linalg.norm(query_embedding) * np.linalg.norm(listing_embedding)
+            )
+            
+            # Compute crop compatibility if provided
+            crop_scores = []
+            if request.cropIds:
+                waste_name = listing_data.get('name', '').lower()
+                waste_type = detect_waste_type(waste_name)
+                
+                if waste_type:
+                    for crop_id in request.cropIds:
+                        crop_category = get_crop_category(crop_id)
+                        compatibility_score = calculate_compatibility_score(waste_type, crop_category, crop_id)
+                        
+                        if compatibility_score > 0:
+                            crop_name = crop_id.replace('-', ' ').replace('_', ' ').title()
+                            crop_scores.append({
+                                'cropId': crop_id,
+                                'cropName': crop_name,
+                                'score': compatibility_score,
+                                'category': crop_category
+                            })
+            
+            crop_scores.sort(key=lambda x: x['score'], reverse=True)
+            
+            # Combine semantic similarity with crop compatibility
+            final_score = similarity * 0.6
+            if crop_scores:
+                avg_crop_score = sum(c['score'] for c in crop_scores) / len(crop_scores)
+                final_score += (avg_crop_score / 100) * 0.4  # normalize crop score
+            
+            results.append({
+                'listingId': listing_id,
+                'listingData': listing_data,
+                'semanticScore': float(similarity),
+                'finalScore': float(final_score),
+                'cropScores': crop_scores[:10] if crop_scores else []
+            })
+        
+        # Sort by final score and limit top_k
+        results.sort(key=lambda x: x['finalScore'], reverse=True)
+        top_results = results[:request.top_k]
+        
+        return {
+            'listings': top_results,
+            'totalFound': len(top_results)
+        }
+        
+    except HTTPException as http_err:
+        raise http_err
+    except Exception as e:
+        # Catch-all for unexpected errors
+        print("Semantic search error:", e)
+        raise HTTPException(status_code=500, detail="Internal server error during semantic search")
 
 @app.post("/crop-compatibility-analysis")
 async def analyze_crop_compatibility(request: CropCompatibilityRequest):
