@@ -15,7 +15,7 @@ load_dotenv()
 
 app = FastAPI(title="AgriLink Semantic Search API")
 
-# Add CORS middleware
+# Add CORS middlewares
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # In production, replace with specific domains
