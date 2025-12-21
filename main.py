@@ -65,45 +65,60 @@ CROP_CATEGORIES = {
     # Vegetables (includes leafy, fruiting, and brassica)
     "vegetables": {
         "crops": ["spinach", "lettuce", "kale", "cabbage", "bok-choy", "water-spinach", "moringa-leaves", "malabar-spinach", "jute-leaves", "chinese-cabbage", "napa-cabbage", 
+                  "mustard-greens", "swiss-chard", "arugula", "sorrel", "endive",
                   "tomato", "eggplant", "bitter-gourd", "squash", "cucumber", "bell-pepper", "chili-pepper", "chayote", "bottle-gourd", "sponge-gourd", "ridge-gourd", "zucchini", "pumpkin",
-                  "carrot", "radish", "beetroot", "turnip", "parsnip", "onion", "garlic", "leek", "shallot", "asparagus", "broccoli", "cauliflower"],
+                  "okra", "winged-bean", "hyacinth-bean", "yardlong-bean", "snow-peas", "green-peas",
+                  "carrot", "radish", "beetroot", "turnip", "parsnip", "onion", "garlic", "leek", "shallot", "asparagus", "broccoli", "cauliflower",
+                  "bamboo-shoots", "celery", "kohlrabi", "banana-blossom", "squash-flower", "artichoke", "seaweed", "sea-grapes", "agar-seaweed", "eucheuma", "pako", "katuray-flower", "talinum"],
         "npk_preference": {"n": "high", "p": "moderate", "k": "moderate"},
         "organic_matter": "high"
     },
     # Fruits (tree fruits and berries)
     "fruits": {
-        "crops": ["banana", "mango", "pineapple", "papaya", "coconut", "jackfruit", "durian", "rambutan", "lanzones", "mangosteen", "guava", "avocado", 
-                  "calamansi", "pomelo", "orange", "lemon", "lime", "watermelon", "melon", "dragon-fruit", "strawberry", "grapes"],
+        "crops": ["banana", "banana-lakatan", "banana-latundan", "banana-saba", "banana-cavendish", "banana-senorita", "banana-cardaba",
+                  "mango", "pineapple", "papaya", 
+                  "coconut", "coconut-tall", "coconut-dwarf", "coconut-hybrid",
+                  "jackfruit", "durian", "rambutan", "lanzones", "mangosteen", "guava", "avocado", 
+                  "calamansi", "pomelo", "orange", "lemon", "lime", "watermelon", "melon", "dragon-fruit", "strawberry", "grapes",
+                  "star-apple", "sugar-apple", "soursop", "santol", "tamarind", "passion-fruit", "chico", "java-plum", "star-fruit", "wax-apple", "longan", "lychee"],
         "npk_preference": {"n": "moderate", "p": "moderate", "k": "high"},
         "organic_matter": "moderate"
     },
     # Legumes (nitrogen-fixing plants)
     "legumes": {
-        "crops": ["green-peas", "snow-peas", "winged-bean", "hyacinth-bean", "yardlong-bean", "mung-bean", "soybean", "peanut"],
+        "crops": ["green-peas", "snow-peas", "winged-bean", "hyacinth-bean", "yardlong-bean", "string-beans",
+                  "mung-bean", "soybean", "peanut", "cowpea", "lima-bean", "chickpea", "pigeon-pea", "lentil", "black-bean"],
         "npk_preference": {"n": "low", "p": "moderate", "k": "moderate"},
         "organic_matter": "high"
     },
     # Root Crops (tubers and root vegetables)
     "root_crops": {
-        "crops": ["potato", "sweet-potato", "cassava", "taro", "purple-yam", "arrowroot", "yam-bean"],
+        "crops": ["potato", "sweet-potato", "sweet-potato-root", "cassava", "cassava-root", "taro", "taro-root", "purple-yam", "purple-yam-root", "arrowroot", "arrowroot-root", "yam-bean", "yam-bean-root", "radish-root", "carrot-root", "beetroot-root", "turnip-root", "parsnip-root"],
         "npk_preference": {"n": "moderate", "p": "high", "k": "moderate"},
         "organic_matter": "high"
     },
     # Herbs and Spices
     "herbs_spices": {
-        "crops": ["basil", "oregano", "thyme", "rosemary", "parsley", "cilantro", "dill", "mint", "ginger", "turmeric", "lemongrass"],
+        "crops": ["basil", "basil-herb", "oregano", "oregano-herb", "thyme", "thyme-herb", "rosemary", "rosemary-herb", "parsley", "cilantro", "dill", "mint", "mint-herb", "peppermint",
+                  "holy-basil", "sambong", "lagundi", "ginger", "ginger-herb", "ginger-root", "ginger-spice", "turmeric", "turmeric-herb", "turmeric-root", "turmeric-spice", 
+                  "lemongrass", "lemongrass-herb", "lemongrass-spice", "pandan", "pandan-herb", "pandan-spice",
+                  "garlic-spice", "onion-spice", "shallot-spice", "galangal", "galangal-spice", "galangal-root",
+                  "black-pepper", "white-pepper", "chili-spice", "birds-eye-chili", "cinnamon", "cloves", "star-anise", "nutmeg", "coriander-seed", "cumin", "annatto", "kaffir-lime-leaf"],
         "npk_preference": {"n": "moderate", "p": "moderate", "k": "low"},
         "organic_matter": "moderate"
     },
     # Industrial Crops (cash crops)
     "industrial_crops": {
-        "crops": ["coffee", "cacao", "sugarcane", "cotton", "tobacco", "rubber"],
+        "crops": ["coffee", "coffee-arabica", "coffee-robusta", "coffee-liberica", "coffee-excelsa",
+                  "cacao", "cacao-criollo", "cacao-forastero", "cacao-trinitario",
+                  "sugarcane", "sugarcane-noble-cane", "sugarcane-hybrid-cane", "sugarcane-chewing-cane",
+                  "cotton", "tobacco", "rubber", "abaca", "tea"],
         "npk_preference": {"n": "moderate", "p": "moderate", "k": "moderate"},
         "organic_matter": "moderate"
     },
     # Mushrooms (high organic matter needs)
     "mushrooms": {
-        "crops": ["oyster-mushroom", "button-mushroom", "shiitake"],
+        "crops": ["oyster-mushroom", "button-mushroom", "shiitake", "straw-mushroom", "enoki", "wood-ear-mushroom", "king-oyster-mushroom", "lions-mane-mushroom", "reishi-mushroom", "maitake"],
         "npk_preference": {"n": "low", "p": "moderate", "k": "moderate"},
         "organic_matter": "very_high"
     }
@@ -177,10 +192,7 @@ WASTE_NPK = {
         "notes": "Mild and less odorous. Good all-purpose manure.",
         "usage": "Can be used fresh for established plants, compost for seedlings."
     },
-    "sheep": {
-        "n": 2.0,
-        "p": 1.8,
-        "k": 2.5,
+    "sheep":
         "organic_matter": 75,
         "best_for": ["fruits", "rice", "corn"],
         "notes": "Higher in potassium. Good for fruit quality.",
@@ -278,7 +290,9 @@ WASTE_NPK = {
     }
 }
 
-# Individual crop NPK preferences for all crops (264 total)
+# Individual crop NPK preferences for common crops (~70 varieties)
+# For crops not listed here, the system falls back to category-level NPK data
+# This ensures ALL crops get compatibility scores
 INDIVIDUAL_CROP_NPK = {
     'white-rice': {
         'n': 'low',
@@ -861,10 +875,11 @@ def calculate_compatibility_score(waste_type, crop_category, crop_id=None):
     else:
         crop_req = CROP_CATEGORIES[crop_category]["npk_preference"]
         crop_note = f"Suitable for {crop_category.replace('_', ' ')}"
-        print(f"DEBUG: Using category preferences for {crop_category}")
+        print(f"DEBUG: Using category preferences for {crop_category} (no individual data for {crop_id})")
     
     # Start with a baseline score to ensure all crops get some score
-    score = 15  # Baseline score (was 0)
+    # Higher baseline for crops without individual data to ensure they still show up
+    score = 25  # Baseline score (increased from 15)
     max_score = 100
     
     # NPK matching score (70% of total, but now 55% since we have 15% baseline)
