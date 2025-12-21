@@ -47,6 +47,17 @@ else:
     # Fallback to default credentials
     db = firestore.Client(project=project_id)
 
+# Health check endpoint for cold start optimization (defined after model and db initialization)
+@app.get("/health")
+async def health_check():
+    """Health check endpoint to wake up the server and verify it's running"""
+    return {
+        "status": "healthy",
+        "service": "AgriLink Semantic Search API",
+        "model_loaded": model is not None,
+        "firestore_connected": db is not None
+    }
+
 # Agricultural knowledge base with NPK values and crop requirements
 # Matching the mobile app crop types exactly
 CROP_CATEGORIES = {
@@ -192,7 +203,10 @@ WASTE_NPK = {
         "notes": "Mild and less odorous. Good all-purpose manure.",
         "usage": "Can be used fresh for established plants, compost for seedlings."
     },
-    "sheep":
+    "sheep": {
+        "n": 2.0,
+        "p": 1.5,
+        "k": 2.5,
         "organic_matter": 75,
         "best_for": ["fruits", "rice", "corn"],
         "notes": "Higher in potassium. Good for fruit quality.",
