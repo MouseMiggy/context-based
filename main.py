@@ -112,18 +112,21 @@ CROP_CATEGORIES = {
 # Livestock waste NPK database (average values) with aliases
 # Matching mobile app livestock types
 WASTE_ALIASES = {
-    "cattle": ["cattle", "cow", "bull", "carabao", "kalabaw", "ox", "oxen"],
+    "cattle": ["cattle", "cow", "bull", "carabao", "kalabaw", "ox", "oxen", "water buffalo", "buffalo"],
     "chicken": ["chicken", "poultry", "hen", "rooster", "pugo", "manok"],
     "pig": ["pig", "swine", "hog", "baboy", "pork"],
     "goat": ["goat", "kanding", "kambing", "kid"],
     "sheep": ["sheep", "lamb", "tupa"],
-    "horse": ["horse", "equine", "donkey", "mule", "kabayo"],
+    "horse": ["horse", "equine", "donkey", "mule", "kabayo", "asno"],
     "rabbit": ["rabbit", "kuneho", "bunny"],
-    "duck": ["duck", "itik", "pato", "mallard"],
+    "duck": ["duck", "itik", "pato", "mallard", "muscovy"],
     "quail": ["quail", "pugo"],
     "turkey": ["turkey", "pabo"],
-    "silkworm": ["silkworm", "silk worm", "bombyx", "mulberry worm"],
-    "ostrich": ["ostrich", "avestruz"]
+    "goose": ["goose", "gansa", "ganso"],
+    "silkworm": ["silkworm", "silk worm", "bombyx", "mulberry worm", "uod ng seda"],
+    "ostrich": ["ostrich", "avestruz", "ostris"],
+    "bee": ["bee", "honey bee", "bubuyog", "maya", "pukyutan"],
+    "camel": ["camel", "kamelyo"]
 }
 
 def detect_waste_type(waste_name):
@@ -245,6 +248,33 @@ WASTE_NPK = {
         "best_for": ["vegetables", "fruits", "root_crops"],
         "notes": "Well-balanced manure. Lower odor than poultry. Good for general use.",
         "usage": "Compost for 2-3 months. Excellent for gardens and orchards."
+    },
+    "goose": {
+        "n": 2.6,
+        "p": 2.1,
+        "k": 1.3,
+        "organic_matter": 72,
+        "best_for": ["vegetables", "rice", "corn"],
+        "notes": "Similar to duck manure. High nitrogen content. Wet consistency.",
+        "usage": "Dry and compost before use. Good for heavy feeders."
+    },
+    "bee": {
+        "n": 1.8,
+        "p": 1.2,
+        "k": 0.8,
+        "organic_matter": 65,
+        "best_for": ["fruits", "vegetables", "herbs_spices"],
+        "notes": "Bee waste and hive debris. Rich in enzymes and beneficial microbes.",
+        "usage": "Can be used fresh or composted. Mix with soil or use as mulch."
+    },
+    "camel": {
+        "n": 1.7,
+        "p": 1.3,
+        "k": 1.6,
+        "organic_matter": 78,
+        "best_for": ["vegetables", "fruits", "root_crops"],
+        "notes": "Dry manure with low odor. Good water retention properties.",
+        "usage": "Can be used fresh or composted. Excellent for arid climate gardens."
     }
 }
 
